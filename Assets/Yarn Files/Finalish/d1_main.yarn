@@ -4,11 +4,10 @@ title: d1_wakeup
 <<showplayer Player true>>
 <<cross TransitionCanvas 2>>
 <<wait 2>>
+<<daystart UICanvas 0>>
 <<settime TimeManager 1 morning>>
-<<clockset UICanvas 8:42>>
-<<clockstop UICanvas>>
 <<cameratarget Cameras Player>>
-<<clockscale UICanvas 5>>
+<<clockscale UICanvas 10>>
 <<unhide Phone>>
 Eddy: Alright! It's the dawn of a new day, rife with opportunity.
 Eddy: Actually, it's the afternoon.
@@ -16,41 +15,30 @@ Eddy: I woke up late.
 Eddy: Still!
 Eddy: The best thing to do in the "morning" is to collect your thoughts, in a quiet, peaceful place.
 Eddy: So let's head to the bathroom.
-<<tor TransitionCanvas Bathroom>>
 ===
 title: d1_prep
 ---
-<<fromblack 1>>
-<<clockset UICanvas 8:50>>
+<<clockscale UICanvas 0>>
 Eddy: Mouth fresh. Hair fixed. Mostly clean-shaven.^upper
 Eddy: Looks like I'm ready to go.
 Eddy: Just gotta keep in mind my main objectives....
 Eddy: First, I need to evade Mom's wrath -- 
 Eddy: That means finishing my homework and chores in time, and coming home before curfew at 5 o'clock.
 Eddy: Second, I need to prep for June and I's --
-<<clockset UICanvas 8:52>>
 Eddy: Uh, "June and mine"...?
 Eddy: <i>Our</i> "heist" --
 Eddy: That means scouting a path through security, getting er, protection, and most importantly...
 Eddy: ...making sure she's happy!
 Eddy: I should also keep <b>texting</b> people in mind.
 Eddy: I can make more time for conversation if I finish things early!
-<<clockset UICanvas 8:54>>
 Eddy: Anyway.
 Eddy: I bet as soon as I get busy, time will feel like it's flying by.
-<<clockset UICanvas 8:55>>
 Eddy: At the rate of 1 second per minute, even.
-//<<shownote Phone To-do>>
-<<clockset UICanvas 8:57>>
+<<shownote Phone To-do>>
 Eddy: Okay! I'll try to write it all down to keep track.
-<<clockset UICanvas 8:59>>
 Eddy: And with that... the mission begins!
-<<clockset UICanvas 9:00>>
-<<clockscale UICanvas 1>>
-<<clockstart UICanvas>>
-<<clockend UICanvas 17:00>>
 <<settod TimeManager freetime>>
-<<unhide Phone>>
+<<clockscale UICanvas 1>>
 //Some kind of mission text could appear here.
 ===
 title: d1_afternoon_slow
@@ -69,11 +57,7 @@ Eddy: Time's up today....
 <<to TransitionCanvas HomeLower>>
 <<settime TimeManager 1 evening>>
 <<wait 1.5>>
-<<hide Phone>>
-<<clockscale UICanvas 1>>
-<<clockstart UICanvas>>
-<<clockset UICanvas 17:30>>
-<<clockend UICanvas 18:00>>
+<<clockscale UICanvas 0>>
 ===
 title: d1_home
 ---
@@ -188,7 +172,7 @@ title: d1_bedtime
 <<cameratarget Cameras TextingJune>>
 Another night....
 <<clockset UICanvas 22:00>>
-<<unhide Phone>>
+<<clockscale UICanvas 1>>
 <<wait 0.1>>
 <<hidetalk DialogueCanvas>>
 <<textcontact DialogueCanvas June>>
@@ -230,7 +214,7 @@ June: love you too
 <<wait 0.2>>
 <<unfocus Phone>>
 <<wait 0.2>>
-<<hide Phone>>
+<<clockscale UICanvas 0>>
 Tomorrow's a new day, huh?
 Let's hope I don't mess it up again....
 [[d2_wakeup]]

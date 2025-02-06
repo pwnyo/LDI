@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles UI display for the piano keys
+/// </summary>
 public class PianoKey : MonoBehaviour
 {
     public MusicKey key;
     public AudioSource sound;
     public Button button;
-    public Color normalColorW, pressColorW;
-    public Color normalColorB, pressColorB;
+    Color normalColorW, pressColorW;
+    Color normalColorB, pressColorB;
 
     public void Play()
     {
@@ -41,9 +44,24 @@ public class PianoKey : MonoBehaviour
     void PaintColor()
     {
         ColorBlock block = button.colors;
-        block.normalColor = MusicNote.IsBlackKey(key) ? normalColorB : normalColorW;
-        block.pressedColor = MusicNote.IsBlackKey(key) ? pressColorB : pressColorW;
-        block.highlightedColor = MusicNote.IsBlackKey(key) ? pressColorB : pressColorW;
+        block.normalColor = IsBlackKey(key) ? normalColorB : normalColorW;
+        block.pressedColor = IsBlackKey(key) ? pressColorB : pressColorW;
+        block.highlightedColor = IsBlackKey(key) ? pressColorB : pressColorW;
         button.colors = block;
+    }
+
+    public static bool IsBlackKey(MusicKey key)
+    {
+        switch (key)
+        {
+            case (MusicKey.CD):
+            case (MusicKey.DE):
+            case (MusicKey.FG):
+            case (MusicKey.GA):
+            case (MusicKey.AB):
+                return true;
+            default:
+                return false;
+        }
     }
 }

@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Interactable : MonoBehaviour, System.IComparable<Interactable>
 {
     public string interactableName;
+    Material material;
+    Material originalMaterial;
+    SpriteRenderer sr;
 
     public enum ArrowDirection
     {
@@ -21,6 +25,11 @@ public abstract class Interactable : MonoBehaviour, System.IComparable<Interacta
 
     protected virtual void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
+        if (sr)
+        {
+            originalMaterial = GetComponent<SpriteRenderer>().material;
+        }
         //PlayerControl.Instance.AddInteractable(this);
     }
 
@@ -42,5 +51,25 @@ public abstract class Interactable : MonoBehaviour, System.IComparable<Interacta
             return -1;
         else
             return 0;
+    }
+    public void SetActiveMaterial(Material m = null)
+    {
+        if (!sr)
+        {
+            return;
+        }
+
+        if (m != null)
+        {
+            sr.material = m;
+            Sequence seq = DOTween.Sequence();
+            seq.Append(sr.material.DOColor(new Color(1, 1, 1, 0.1f), 0.5f));
+            seq.Append(sr.material.DOColor(new Color(1, 1, 1, 0.5f), 0.5f));
+            seq.SetLoops(-1);
+        }
+        else
+        {
+            sr.material = originalMaterial;
+        }
     }
 }

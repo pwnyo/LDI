@@ -1,10 +1,11 @@
 ﻿
 [System.Serializable]
+/// <summary>
+/// Represents a music note
+/// </summary>
 public class MusicNote
 {
     public MusicKey noteKey;
-    public float duration = 1; //in quarter notes
-    public int octave = 4; //C4
 
     public void PitchUp()
     {
@@ -40,24 +41,6 @@ public class MusicNote
                 return key - 1;
             default:
                 return key;
-        }
-    }
-    public bool IsBlackKey()
-    {
-        return IsBlackKey(noteKey);
-    }
-    public static bool IsBlackKey(MusicKey key)
-    {
-        switch (key)
-        {
-            case (MusicKey.CD):
-            case (MusicKey.DE):
-            case (MusicKey.FG):
-            case (MusicKey.GA):
-            case (MusicKey.AB):
-                return true;
-            default:
-                return false;
         }
     }
 }

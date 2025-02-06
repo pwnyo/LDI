@@ -22,7 +22,8 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         SNEAK, //only if you're not jumping (same for others)
         WALK,
         CROUCH,
-        SIT
+        SIT,
+        CAUGHT,
     }
     public PlayerState state;
     public bool forceSneak;
@@ -47,12 +48,14 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
     private AudioSource sfxPlayer;
+    public Material activeInteractableMaterial;
 
     private DialogueRunner dr;
     public float interactMinDistance;
     private List<Interactable> interactList = new List<Interactable>();
     private Interactable interactSelection; 
     private int interactIndex;
+    private bool prevArrowState;
 
     #endregion
 
@@ -119,10 +122,8 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
         dr = FindObjectOfType<DialogueRunner>();
-        if (input == null)
-        {
-            input = InputHelper.Instance;
-        }
+
+        input = InputHelper.Instance;
         interactIndex = -1;
 
         canMove = true;
@@ -135,8 +136,8 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         input.jumpAction.canceled += Fastfall;
         input.sneakAction.started += Sneak;
         input.sneakAction.canceled += Sneak;
-        input.moveAction.performed += Move;
-        input.moveAction.canceled += Move;
+        //input.moveAction.performed += Move;
+        //input.moveAction.canceled += Move;
         input.interactAction.started += Interact;
         input.interactAction.canceled += Interact;
         input.phoneAction.started += TogglePhone;
@@ -149,8 +150,8 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         input.jumpAction.canceled -= Fastfall;
         input.sneakAction.started -= Sneak;
         input.sneakAction.canceled -= Sneak;
-        input.moveAction.performed -= Move;
-        input.moveAction.canceled -= Move;
+        //input.moveAction.performed -= Move;
+        //input.moveAction.canceled -= Move;
         input.interactAction.started -= Interact;
         input.interactAction.canceled -= Interact;
         input.phoneAction.started -= TogglePhone;
@@ -170,7 +171,8 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     }
     void FixedUpdate()
     {
-        if (CanAct()) {
+        if (CanAct()) 
+        {
             transform.position += move * Time.deltaTime;
         }
     }
@@ -187,6 +189,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     #region Movement Functions
     void CheckAnimation()
     {
+        CheckMove();
         move.x = IsSneaky() && groundState == GroundState.GROUNDED ? moveX * sneakSpeed : moveX * walkSpeed;
         if (groundState != GroundState.GROUNDED)
         {
@@ -216,6 +219,19 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         }
     }
 
+    void CheckMove()
+    {
+        //quit early if we stopped moving
+        if (!CanAct())
+        {
+            return;
+        }
+        moveX = input.moveAction.ReadValue<Vector2>().x;
+        if (input.moveAction.IsPressed())
+        {
+            spriteRenderer.flipX = moveX < 0;
+        }
+    }
     void Move(InputAction.CallbackContext context)
     {
         //read input
@@ -300,7 +316,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         if (groundState != GroundState.GROUNDED && rb.velocity.y < -0.05)
         {
             groundState = GroundState.FALLING;
-            //PlayAnimation(PlayerState.FALL);
+            PlayAnimation(PlayerState.FALL);
         }
     }
     void Fastfall(InputAction.CallbackContext context)
@@ -314,12 +330,12 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     }
     void Land()
     {
-        //Debug.Log("landed");
+        Debug.Log("landed");
         isFastfall = false;
         groundState = GroundState.GROUNDED;
         rb.gravityScale = fallSpeed;
 
-        if ((Time.time - timeSinceJumpInput) < jumpBufferTime)
+        if (false && (Time.time - timeSinceJumpInput) < jumpBufferTime)
         {
             Debug.Log("buffered jump!");
             //Jump();
@@ -369,18 +385,19 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     public void AllowMovement(bool setting)
     {
         canMove = setting;
-    }
-    public IEnumerator StopMovement(float waitTime)
-    {
-        moveX = 0;
-        canMove = false;
-        yield return new WaitForSeconds(waitTime);
-        canMove = true;
+        if (!canMove)
+        {
+            Pause();
+        }
     }
     public void Spawn(Vector3 location, bool setting)
     {
         transform.position = location;
         spriteRenderer.flipX = setting;
+    }
+    public void SpawnKeepFlip(Vector3 location)
+    {
+        Spawn(location, spriteRenderer.flipX);
     }
     #endregion
 
@@ -479,6 +496,15 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         }
         PlaceInteractArrow(interactList[interactIndex]);
     }
+    public void DisableInteractArrow()
+    {
+        prevArrowState = interactArrow.activeSelf;
+        interactArrow.SetActive(false);
+    }
+    public void EnableInteractArrow()
+    {
+        interactArrow.SetActive(prevArrowState);
+    }
     public void PlaceInteractArrow(Interactable interact)
     {
         if (interact.showArrow)
@@ -502,6 +528,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
             }
             interactArrow.transform.localScale = interact.arrowScale;
             interactArrow.transform.position = interact.transform.position + interact.arrowOffset;
+            interact.SetActiveMaterial(activeInteractableMaterial);
         }
     }
 
@@ -586,15 +613,15 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     {
         return forceSneak || isSneaking;
     }
-    public bool CanAct()
+    public bool CanAct(bool checkPhone = true)
     {
         if (debugPause) return false;
-        return canMove && state != PlayerState.BUSY && GameManager.Instance.IsOpen() && !PhoneManager.Instance.IsFocusing();
+        return canMove && state != PlayerState.BUSY && GameManager.Instance.IsOpen() && !PhoneManager.Instance.IsFocusing() && (!checkPhone || !GameManager.Instance.isPhoneFocused);
     }
     void TogglePhone(InputAction.CallbackContext context)
     {
-        if (!PhoneManager.Instance.isActiveAndEnabled || !CanAct() || 
-            GameDialogueManager.Instance.dialogueState != GameDialogueManager.DialogueState.NONE)
+        if (!PhoneManager.Instance.isActiveAndEnabled || !CanAct(false) || 
+            GameDialogueManager.Instance.dialogueState != GameDialogueManager.DialogueState.NONE || context.phase != InputActionPhase.Started)
         {
             return;
         }
@@ -653,8 +680,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
             Interactable interact = collision.gameObject.GetComponent<Interactable>();
             //Debug.Log("Uncontact " + interact.interactableName);
             interactList.Remove(interact);
-
-            interactIndex = interactList.Count - 1;
+            interact.SetActiveMaterial();
 
             if (interactList.Count < 1)
             {

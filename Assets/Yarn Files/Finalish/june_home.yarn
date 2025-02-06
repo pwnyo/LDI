@@ -67,6 +67,7 @@ title: junesneak
     Eddy: Thanks for coming out. I'll do my best to make it worth the trouble!
     June: I should probably get back inside before my brother notices I snuck out.
     June: Before we go thoughhh....
+    //should play some animation or sfx here
     ->Give her a peck
         *I give her a peck on the cheek.
         June: Hmm, I guess that'll do for now.

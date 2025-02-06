@@ -73,8 +73,8 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_UseSpriteMesh: 1
+  m_PixelsPerUnitMultiplier: 16
 --- !u!1 &838070400571016969
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,6 +135,11 @@ MonoBehaviour:
   messengerName: {fileID: 7542698782241799398}
   message: {fileID: 7542698781061545913}
   boxImage: {fileID: 838070399794832623}
+  defaultMessage:
+    header: 
+    content: 
+    used: 0
+    isViet: 0
 --- !u!1 &7542698781061545915
 GameObject:
   m_ObjectHideFlags: 0

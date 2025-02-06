@@ -3,36 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 
-public class Laser : Talker
+public class Laser : SecurityObject
 {
-    public float threatLevel;
+    [Header("Unique")]
     public bool moves;
     public bool blinks;
-    public bool moveToward1;
+    bool moveToward1;
     public float moveSpeed;
     public Vector3 endPoint1;
     public Vector3 endPoint2;
     public float upTime;
     public float downTime;
-    SpriteRenderer sr;
-    BoxCollider2D col;
-    SecurityManager sm;
-    public DialogueRunner dr;
+    public GameObject laser;
+    bool isStopped;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
-        col = GetComponent<BoxCollider2D>();
-        sm = FindObjectOfType<SecurityManager>();
-        
-        StartCoroutine(BlinkLaser());
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        if (moves)
+        base.Update();
+
+        if (moves && !isStopped)
         {
             if (moveToward1)
             {
@@ -54,33 +50,37 @@ public class Laser : Talker
         }
     }
 
+    protected override void ToggleOn(bool setting)
+    {
+        base.ToggleOn(setting);
+        if (isOn)
+        {
+            StartCoroutine(BlinkLaser());
+        }
+        else
+        {
+            StopAllCoroutines();
+        }
+    }
+
     IEnumerator BlinkLaser()
     {
         while (blinks)
         {
-            
             yield return new WaitForSeconds(upTime);
             if (downTime > 0)
             {
-                SetLaser(false);
+                ToggleLaser(false);
                 yield return new WaitForSeconds(downTime);
-                SetLaser(true);
+                ToggleLaser(true);
             }
         }
     }
-    void SetLaser(bool setting)
+    void ToggleLaser(bool setting)
     {
-        sr.enabled = setting;
-        col.enabled = setting;
+        laser.SetActive(setting);
     }
-    public override void Interact()
-    {
-        if (nodeName.Length > 0)
-        {
-            dr.StartDialogue(nodeName);
-        }
-    }
-    private new void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(endPoint1, 0.1f);
         Gizmos.DrawWireSphere(endPoint2, 0.1f);

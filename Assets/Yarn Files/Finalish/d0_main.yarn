@@ -2,10 +2,8 @@ title: d0_liedown
 ---
 <<cameratarget Cameras LieDown false>>
 <<usealt Player lay0>>
-<<clockset UICanvas 19:30>>
-<<clockend UICanvas 20:00>>
-<<clockstop UICanvas>>
-<<hide Phone>>
+<<daystart UICanvas 0>>
+<<clockscale UICanvas 0>>
 <<spawn TransitionCanvas LieDown>>
 <<settod TimeManager freetime>>
 <<cameratarget Cameras Player>>
@@ -24,12 +22,13 @@ Eddy: Well, a few.
 <<camerashake Cameras 0.5 0.1 100 >> 
 Eddy: Oh!&shock
 Eddy: There's one of them!
-<<unhide Phone>>
+<<clockscale UICanvas 10>>
 <<wait 0.1>>
 <<hidetalk DialogueCanvas>>
 <<textcontact DialogueCanvas June>>
+<<wait 0.15>>
 June: haillo
-Eddy: hi
+Eddy: hi!
 June: I've got good news
 June: More details after i finish this essay ;)
 Eddy: You got this!!
@@ -43,8 +42,6 @@ Eddy: I've got this, too!&happy
 <<setdialogue DialogueCanvas expo >>
 (Use WASD or the arrow keys to move. Press X to interact. Check the Notes on your phone for details.)
 <<settod TimeManager evening>>
-<<clockscale UICanvas 60>>
-<<clockstart UICanvas>>
 ===
 title: d0_evening_slow
 ---
@@ -55,6 +52,14 @@ Eddy: Coming!
 <<set $d0_june_late to true>>
 <<to TransitionCanvas HomeUpper EddyRoom>>
 <<wait 0.15>>
+===
+title: d0_late
+---
+<< camerashake Cameras 1 0.2 300 >> 
+Mom: EDDY!!! Come down here!
+Eddy: Agh! I better get going downstairs!
+<<spawn TransitionCanvas HomeUpper>>
+<<to TransitionCanvas HomeLower HomeUpper>>
 ===
 title: d0_hallway
 ---
@@ -180,7 +185,7 @@ let's do it!
 <<wait 0.2>>
 <<unfocus Phone>>
 <<wait 0.2>>
-<<hide Phone>>
+<<clockscale UICanvas 0>>
 Eddy: .....
 <<yarnanim YarnController edbed Bedticipation>>
 Eddy: AHHHHHH!!!

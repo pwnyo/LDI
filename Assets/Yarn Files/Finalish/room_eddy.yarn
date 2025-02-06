@@ -132,3 +132,7 @@ title: eddy_bed_main
     << set $veddybed to false>> 
 << endif >>
 ===
+title: piano
+---
+<<pianoup MusicFolder>>
+===

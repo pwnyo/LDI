@@ -24,14 +24,11 @@ Ellen: Okay, bye.
 Eddy: See ya.
 Ellen: I'm expecting boba in the fridge when I get back!
 Eddy: It'll be empty!
-<<wait  1>>
+<<wait 1>>
 <<cross TransitionCanvas 1.5>>
-<<wait  1.5>>
-<<unhide Phone>>
-<<clockset UICanvas 9:00>>
-<<clockend UICanvas 17:00>>
+<<wait 1.5>>
+<<daystart UICanvas 2>>
 <<clockscale UICanvas 1>>
-<<clockstart UICanvas>>
 <<settod TimeManager freetime>>
 ===
 title: d2_free
@@ -49,7 +46,7 @@ title: d2_curfew
 Eddy: Maybe clean up a bit too. Wash my face, maybe?
 Eddy: ...Nah, who am I kidding?
 <<tor TransitionCanvas EddyRoom>>
-<<clockscale UICanvas 60>>
+<<clockscale UICanvas 0>>
 My room needs cleaning....
 Oh well.
 <<settod TimeManager evening>>
@@ -87,7 +84,7 @@ title: d2_mom
     <<else>>
         Mom: What are you waiting for?
         Eddy: I'm working on it....
-        Mom: Don't wait until tomorrow to fit everything.
+        Mom: You're always waiting until the last minute.
         Eddy: Yeah....
         <<set $d2_mom_talk to true>>
     <<endif>>
@@ -96,9 +93,9 @@ title: d2_mom
     Eddy: ...She's Viet.
     Mom: Good, good.
     Mom: As long as she's not --
-    Eddy: No, no! Mom.
+    Eddy: Nonono! Mom!
     Mom: As long as she's not from the North.
-    Mom: Can't understand that.
+    Mom: Can't understand their accents.
     Eddy: Oh.
 <<endif>>
 ===
@@ -170,15 +167,16 @@ title: d2_meet_ellen
     Eddy: Primordial, perhaps.
     June: She looks like she could be younger than you.
     Ellen: Case closed.
-    Eddy: ...Maybe I should start doing skincare.
+    Eddy: Maybe I should start doing skincare.
+    Ellen: You're practicing a duet, right?
     Ellen: What piece are you playing?
     June: It's a duet from Rokugatsu.
     Ellen: That's cute!
     June: Um, yeah! Thanks.
 <<else>>
     Ellen: You guys are cute.
-    Eddy: We're uh, just friends.
-    June: Yes. Buddies.
+    Eddy: We're... just friends.
+    June: Yes. What he said. Best buddies.
 <<endif>>
 ===
 title: d2_night
@@ -209,9 +207,5 @@ Now that she's gone though, it's really dawning on me.
     1 more to go.
     Let's call it a night.
 <<endif>>
-<<settime TimeManager 3 morning>>
-<<cross TransitionCanvas 1.5>>
-<<to TransitionCanvas EddyRoom>>
-<<wait  0.5>>
-<<showplayer Player true>>
+[[d3_wakeup]]
 ===

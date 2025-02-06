@@ -1014,6 +1014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactName: Cam
   displayName: Cammy
+  convoObj: {fileID: 0}
   preview: {fileID: 1003302676}
   newMessage: {fileID: 558747556}
   buttons: []
@@ -1279,6 +1280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactName: Group
   displayName: cool cousins + ellen
+  convoObj: {fileID: 0}
   preview: {fileID: 808277817}
   newMessage: {fileID: 65245119}
   buttons: []
@@ -1953,6 +1955,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactName: Mom
   displayName: Mom
+  convoObj: {fileID: 0}
   preview: {fileID: 1769086986}
   newMessage: {fileID: 150303258}
   buttons: []
@@ -2779,6 +2782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactName: Ellen
   displayName: L-en
+  convoObj: {fileID: 0}
   preview: {fileID: 1987450576}
   newMessage: {fileID: 1886951048}
   buttons: []
@@ -4103,6 +4107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactName: Dad
   displayName: Dad
+  convoObj: {fileID: 0}
   preview: {fileID: 1303311873}
   newMessage: {fileID: 241112253}
   buttons: []
@@ -5420,6 +5425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactName: Andy
   displayName: andy
+  convoObj: {fileID: 0}
   preview: {fileID: 1055649342}
   newMessage: {fileID: 644236804}
   buttons: []
@@ -8113,81 +8119,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 1
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &795110322439838453
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 795110322439838454}
-  - component: {fileID: 795110322439838456}
-  - component: {fileID: 795110322439838455}
-  m_Layer: 5
-  m_Name: Image (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &795110322439838454
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 795110322439838453}
-  m_LocalRotation: {x: -0, y: -0, z: -0.21643952, w: 0.97629607}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.8000001, z: 1}
-  m_Children: []
-  m_Father: {fileID: 795110323129081607}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -3, y: -5.5}
-  m_SizeDelta: {x: 12, y: 12}
-  m_Pivot: {x: 0.5, y: 0}
---- !u!222 &795110322439838456
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 795110322439838453}
-  m_CullTransparentMesh: 0
---- !u!114 &795110322439838455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 795110322439838453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.59228784, g: 0.7735849, b: 0.39044145, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f69cfae488ac44b7f8c4fcac9288f3b3, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 1
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &795110322524113929
 GameObject:
   m_ObjectHideFlags: 0
@@ -9240,7 +9171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &795110323129081607
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9253,14 +9184,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 795110323725783290}
-  - {fileID: 795110322439838454}
   m_Father: {fileID: 8257133852707823001}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 40, y: 65}
-  m_SizeDelta: {x: 12, y: 12}
+  m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &795110323129081609
 CanvasRenderer:
@@ -9283,14 +9213,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.59228784, g: 0.7735849, b: 0.39044145, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 9c80887a3d676a74886ea0a2df5b46eb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9298,7 +9228,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
-  m_UseSpriteMesh: 0
+  m_UseSpriteMesh: 1
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &795110323129081611
 Animator:
@@ -10374,6 +10304,7 @@ MonoBehaviour:
   - {fileID: 2416567174478931597}
   contactContainer: {fileID: 795110321944952057}
   notificationAnimator: {fileID: 795110323129081611}
+  currentContactName: {fileID: 0}
   newMessageObj: {fileID: 795110322350277039}
   newMessageText: {fileID: 795110322095066920}
 --- !u!1 &795110323517304212
@@ -11111,6 +11042,7 @@ MonoBehaviour:
     used: 0
   expansion: {fileID: 0}
   otherNotes: {fileID: 795110323560875965}
+  toDoList: {fileID: 0}
 --- !u!1 &795110323931897923
 GameObject:
   m_ObjectHideFlags: 0
@@ -13838,13 +13770,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tManager: {fileID: 795110323500965070}
   nManager: {fileID: 0}
+  input: {fileID: 0}
   phoneState: 0
   phoneApp: 0
   focusAnimationTime: 0.75
   hideAnimationTime: 0
   alertAnimationTime: 0
-  isFocused: 0
   animator: {fileID: 795110323342360440}
+  firstButton: {fileID: 0}
   putAway: {fileID: 5440368727811835382}
   canvasGroup: {fileID: 0}
   timeManager: {fileID: 0}
@@ -15811,6 +15744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactName: June
   displayName: June<3
+  convoObj: {fileID: 0}
   preview: {fileID: 795110323303437989}
   newMessage: {fileID: 795110322524113929}
   buttons: []

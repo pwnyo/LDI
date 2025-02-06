@@ -1,19 +1,19 @@
 title: d3_wakeup
 ---
+<<tor TransitionCanvas EddyRoom>>
+<<showplayer Player true>>
+<<cross TransitionCanvas 2>>
+<<wait 2>>
+<<daystart UICanvas 0>>
+<<settime TimeManager 3 morning>>
 Dawn of the Final Day.
 ...Is what I'm thinking.
 But it's not dawn.
 And it's not over!
 No morning text today.
 No Ellens to awaken me from sleep either.
-<<unhide Phone>>
-All that's left is to get ready and do what I can!
-<<settod TimeManager freetime>>
-<<clockset UICanvas 9:00>>
-<<clockend UICanvas 17:00>>
 <<clockscale UICanvas 1>>
-<<clockstart UICanvas>>
-<<settod TimeManager freetime>>
+All that's left is to get ready and do what I can!
 ===
 title: d3_curfew
 ---
@@ -23,7 +23,7 @@ title: d3_curfew
     Eddy: It's 5! I need to get ready....
 <<endif>>
 <<to TransitionCanvas EddyRoom>>
-<<clockscale UICanvas 60>>
+<<clockscale UICanvas 0>>
 <<settod TimeManager evening>>
 ===
 title: d3_dinner
@@ -63,7 +63,7 @@ Let's hope she doesn't come out to bother me.
 title: d3_room_parents
 ---
 It's pretty quiet, but I think I can make out a bit of music.
-Is Mom listening to music while she reads?
+Is Mom listening to her reading music?
 ===
 title: d3_ellen_help
 ---

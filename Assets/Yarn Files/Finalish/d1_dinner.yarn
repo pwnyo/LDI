@@ -3,7 +3,7 @@ title: d1_dinner
 <<tor TransitionCanvas HomeLower>>
 <<cameratarget Cameras Table>>
 <<cross TransitionCanvas 1.5>>
-<<hide Phone>>
+<<clockscale UICanvas 0>>
 <<wait 1.5>>
 <<settime TimeManager 1 dinner>>
 <<showplayer Player false>>
@@ -111,11 +111,6 @@ Eddy: Yeah.
 Well....
 There's a good reason why June doesn't want my parents to know we're dating.
 You can't just <b>be</b>. You have to be better than someone else.
-<<unhide Phone>>
-<<wait 0.1>>
-<<clockscale UICanvas 1>>
-<<clockset UICanvas 20:30>>
-<<clockend UICanvas 21:00>>
 ===
 title: d1_help
 ---

@@ -8,6 +8,7 @@ public class Day : MonoBehaviour
     [SerializeField]
     private TimedObjects[] _timesOfDay;
     private DialogueRunner dr;
+    public Clock.ClockTime dayStart, dayEnd;
 
     private void Start()
     {

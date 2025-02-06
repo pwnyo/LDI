@@ -440,11 +440,11 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f2854d80-f3b0-4413-9e5e-3a3a8f70a395"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""id"": ""ce91a9e4-2963-4620-9fe6-f739605556ad"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Sneak"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -609,7 +609,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoC"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -642,7 +642,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoCD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -653,7 +653,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoCD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -675,7 +675,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoCD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -686,7 +686,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoCD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -708,7 +708,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -741,7 +741,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoE"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -763,7 +763,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoF"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -796,7 +796,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoG"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -829,7 +829,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoA"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -862,7 +862,7 @@ public partial class @InputControlAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""PianoB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

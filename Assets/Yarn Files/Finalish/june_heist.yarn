@@ -73,8 +73,7 @@ June: Welcome.
 June: To my humble abode.
 Eddy: Oh...!
 Eddy: It's so...
-Eddy: Purple.
-Eddy: But it's cute!
+Eddy: Purple. And cute!
 June: I'm still setting up my shelf.
 June: Believe it or not, this is cleaned up.
 Eddy: Um... that's kind of easy to believe, compared to my room.
@@ -90,7 +89,7 @@ Eddy: Same.
 <<wait 1>>
 June: Thanks for coming.
 June: Sorry for the unreasonable request.
-Eddy: No, I was looking forward it!
+Eddy: No, I'm looking forward it!
 June: Same for me.
 <<yarnoff YarnController june2>>
 <<yarnon YarnController june>>
@@ -204,4 +203,8 @@ Eddy: Give me a shot too!
 <<wait  0.1>>
 <<settime TimeManager 3 night>>
 <<to TransitionCanvas HomeLower>>
+===
+title: june_caught
+---
+AHH!!!
 ===

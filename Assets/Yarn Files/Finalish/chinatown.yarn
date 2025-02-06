@@ -6,6 +6,22 @@ title: chinatown
     <<set $vchinatown to true>>
 <<endif>>
 ===
+title: door_food
+---
+<<door Food>>
+===
+title: door_nail
+---
+<<door Nail>>
+===
+title: door_tea
+---
+<<door Tea>>
+===
+title: door_market
+---
+<<door Market>>
+===
 title: blackguy
 ---
 <<if $condomsdone is false>>

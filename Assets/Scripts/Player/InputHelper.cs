@@ -30,15 +30,22 @@ public class InputHelper : MonoBehaviour
     public InputAction abKey;
     public InputAction bKey;
     public InputAction c2Key;
-    public InputAction[] pianoKeys { get; set; }
+    public InputAction[] pianoKeys;
+    InputAction allActions;
+
     public static InputHelper Instance { get; private set; }
+    public DeviceType ActiveDevice { get; private set; }
 
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+        }
         else if (Instance != this)
-            Destroy(this.gameObject);
+        {
+            //Destroy(this.gameObject);
+        }
 
         moveAction = input.actions["Move"];
         jumpAction = input.actions["Jump"];
@@ -64,16 +71,19 @@ public class InputHelper : MonoBehaviour
         c2Key = input.actions["PianoC2"];
         InputAction[] keys = { cKey, cdKey, dKey, deKey, eKey, fKey, fgKey, gKey, gaKey, aKey, abKey, bKey, c2Key };
         pianoKeys = keys;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+        ActiveDevice = DeviceType.KEYBOARD;
+    }
+    public void UpdateDevice()
     {
-        
+        Debug.Log(input.currentControlScheme);
+        if (input.currentControlScheme.Contains("Keyboard"))
+        {
+            ActiveDevice = DeviceType.KEYBOARD;
+        }
+        else
+        {
+            ActiveDevice = DeviceType.GAMEPAD;
+        }
     }
 }

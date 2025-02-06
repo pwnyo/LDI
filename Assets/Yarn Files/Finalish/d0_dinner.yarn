@@ -4,8 +4,8 @@ title: d0_dinner
 <<cameratarget Cameras Table>>
 Eddy: Dinner's ready, everyone!!!
 <<cross TransitionCanvas 1.5>>
+<<clockscale UICanvas 0>>
 <<wait 1.5>>
-<<hide Phone>>
 <<settime TimeManager 0 dinner>>
 <<showplayer Player false>>
 <<yarnoff YarnController table>>
@@ -97,14 +97,6 @@ Ellen: Bye!
 <<settod TimeManager night>>
 <<yarnon YarnController table>>
 Eddy: Ellen's acting all weird.... Maybe I should talk to her about it.
-===
-title: d0_late
----
-<< camerashake Cameras 1 0.2 300 >> 
-Mom: EDDY!!! Come down here!
-Eddy: Agh! I better get going downstairs!
-<<spawn TransitionCanvas HomeUpper>>
-<<to TransitionCanvas HomeLower HomeUpper>>
 ===
 title: d0_help
 ---
