@@ -731,7 +731,7 @@ public class GameDialogueManager : MonoBehaviour
         {
             return;
         }
-        //Debug.Log("nexting");
+        Debug.Log("nexting");
         if (dialogueState == DialogueState.TEXT)
         {
             sfxSource.PlayOneShot(sfx);

@@ -178,7 +178,7 @@ public class AudioManager : MonoBehaviour
             musicSource.clip = a;
             musicSource.Play();
             //slowly raise the volume to desired level over duration of seconds
-            Debug.Log("fading in " + name + duration + volume);
+            Debug.Log($"fading in {name}: {duration}s, {volume} vol");
             StartCoroutine(FadeMixerGroup.StartFade(musicSource, "vol", duration, volume));
         }
     }

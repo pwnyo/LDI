@@ -7,7 +7,7 @@ using Yarn.Unity;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 
 public class PlayerControl : MonoBehaviour, ISoundMaker
 {
@@ -46,8 +46,10 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     public SpriteRenderer spriteRenderer;
     public SpriteRenderer altSpriteRenderer;
     private Rigidbody2D rb;
-    private CapsuleCollider2D col;
+    private BoxCollider2D col;
     private AudioSource sfxPlayer;
+    public ParticleSystem stepParticles;
+    public Color psColor;
     public Material activeInteractableMaterial;
 
     private DialogueRunner dr;
@@ -78,7 +80,9 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     public float jumpTime;
     public float landTime;
     public float jumpBufferTime;
+    public float jumpLockoutTime;
     float timeSinceJumpInput;
+    float timeSinceLastJump;
     public float fallSpeed;
     public float fallFastMultiplier;
     [SerializeField]
@@ -120,7 +124,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     {
         sfxPlayer = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<CapsuleCollider2D>();
+        col = GetComponent<BoxCollider2D>();
         dr = FindObjectOfType<DialogueRunner>();
 
         input = InputHelper.Instance;
@@ -132,31 +136,11 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     }
     void OnEnable()
     {
-        input.jumpAction.started += Jump;
-        input.jumpAction.canceled += Fastfall;
-        input.sneakAction.started += Sneak;
-        input.sneakAction.canceled += Sneak;
-        //input.moveAction.performed += Move;
-        //input.moveAction.canceled += Move;
-        input.interactAction.started += Interact;
-        input.interactAction.canceled += Interact;
-        input.phoneAction.started += TogglePhone;
-        input.freeAction.started += Free;
-        input.resetAction.started += Reset;
+        RegisterInputs(FindObjectOfType<InputHelper>());
     }
     void OnDisable()
     {
-        input.jumpAction.started -= Jump;
-        input.jumpAction.canceled -= Fastfall;
-        input.sneakAction.started -= Sneak;
-        input.sneakAction.canceled -= Sneak;
-        //input.moveAction.performed -= Move;
-        //input.moveAction.canceled -= Move;
-        input.interactAction.started -= Interact;
-        input.interactAction.canceled -= Interact;
-        input.phoneAction.started -= TogglePhone;
-        input.freeAction.started -= Free;
-        input.resetAction.started -= Reset;
+        DeregisterInputs();
     }
 
     // Update is called once per frame
@@ -175,6 +159,36 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         {
             transform.position += move * Time.deltaTime;
         }
+    }
+    public void RegisterInputs(InputHelper inputHelper)
+    {
+        input = inputHelper;
+        input.jumpAction.started += Jump;
+        input.jumpAction.canceled += Fastfall;
+        input.sneakAction.started += Sneak;
+        input.sneakAction.canceled += Sneak;
+        //input.moveAction.performed += Move;
+        //input.moveAction.canceled += Move;
+        input.interactAction.started += Interact;
+        input.interactAction.canceled += Interact;
+        input.phoneAction.started += TogglePhone;
+        input.freeAction.started += Free;
+        input.resetAction.started += Reset;
+    }
+    public void DeregisterInputs()
+    {
+        input.jumpAction.started -= Jump;
+        input.jumpAction.canceled -= Fastfall;
+        input.sneakAction.started -= Sneak;
+        input.sneakAction.canceled -= Sneak;
+        //input.moveAction.performed -= Move;
+        //input.moveAction.canceled -= Move;
+        input.interactAction.started -= Interact;
+        input.interactAction.canceled -= Interact;
+        input.phoneAction.started -= TogglePhone;
+        input.freeAction.started -= Free;
+        input.resetAction.started -= Reset;
+        input = null;
     }
     public void SetPlayerState(PlayerState setting)
     {
@@ -227,7 +241,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
             return;
         }
         moveX = input.moveAction.ReadValue<Vector2>().x;
-        if (input.moveAction.IsPressed())
+        if (moveX != 0)
         {
             spriteRenderer.flipX = moveX < 0;
         }
@@ -297,6 +311,10 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     }
     void Jump(InputAction.CallbackContext context)
     {
+        Jump();
+    }
+    void Jump()
+    {
         if (!CanAct() || GameDialogueManager.Instance.dialogueState != GameDialogueManager.DialogueState.NONE)
         {
             return;
@@ -305,9 +323,10 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         if (groundState == GroundState.GROUNDED)
         {
             //Debug.Log("Trying to jump!");
+            timeSinceLastJump = Time.time;
             groundState = GroundState.RISING;
             PlayAnimation(PlayerState.JUMP);
-            //PlaySound("JUMP", 0.5f);
+            PlaySound("JUMP", 0.5f);
             rb.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
         }
     }
@@ -318,12 +337,20 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
             groundState = GroundState.FALLING;
             PlayAnimation(PlayerState.FALL);
         }
+        if (!isFastfall && input.jumpAction.phase == InputActionPhase.Waiting)
+        {
+            Fastfall();
+        }
     }
     void Fastfall(InputAction.CallbackContext context)
     {
+        Fastfall();
+    }
+    void Fastfall()
+    {
         if (groundState != GroundState.GROUNDED && !isFastfall)
         {
-            //Debug.Log("Fastfalling");
+            Debug.Log("Fastfalling");
             isFastfall = true;
             rb.gravityScale = fallSpeed * fallFastMultiplier;
         }
@@ -334,15 +361,15 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         isFastfall = false;
         groundState = GroundState.GROUNDED;
         rb.gravityScale = fallSpeed;
+        PlaySound("LAND", 0.5f);
 
-        if (false && (Time.time - timeSinceJumpInput) < jumpBufferTime)
+        if (!HasJustJumped() && (Time.time - timeSinceJumpInput) < jumpBufferTime)
         {
             Debug.Log("buffered jump!");
-            //Jump();
+            Jump();
         }
         else
         {
-            PlaySound("LAND", 0.5f);
             if (!IsStopped())
             {
                 PlayAnimation(PlayerState.WALK);
@@ -353,10 +380,13 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
             }
         }
     }
-
+    bool HasJustJumped()
+    {
+        return (Time.time - timeSinceLastJump) < jumpLockoutTime;
+    }
     void CheckGround()
     {
-        if (groundState != GroundState.FALLING)
+        if (HasJustJumped() || groundState == GroundState.GROUNDED)
         {
             return;
         }
@@ -380,7 +410,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     }
     bool IsStopped()
     {
-        return Mathf.Abs(moveX) < 0.1f;
+        return Mathf.Abs(moveX) < 0.125f;
     }
     public void AllowMovement(bool setting)
     {
@@ -573,12 +603,15 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         {
             case "WALK":
                 clip = sounds[0].audioClip;
+                ShowParticles();
                 break;
             case "JUMP":
                 clip = sounds[1].audioClip;
+                ShowParticles();
                 break;
             case "LAND":
                 clip = sounds[2].audioClip;
+                ShowParticles();
                 break;
             case "INTERACT":
                 clip = sounds[3].audioClip;
@@ -594,6 +627,16 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
             }
             sfxPlayer.pitch = pitch;
             sfxPlayer.PlayOneShot(clip, vol);
+        }
+    }
+    void ShowParticles()
+    {
+        if (stepParticles)
+        {
+            stepParticles.transform.position = transform.position;
+            ParticleSystem.MainModule mod = stepParticles.main;
+            mod.startColor = psColor;
+            stepParticles.Play();
         }
     }
     public void Mute()
@@ -616,6 +659,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     public bool CanAct(bool checkPhone = true)
     {
         if (debugPause) return false;
+        if (input == null) return false;
         return canMove && state != PlayerState.BUSY && GameManager.Instance.IsOpen() && !PhoneManager.Instance.IsFocusing() && (!checkPhone || !GameManager.Instance.isPhoneFocused);
     }
     void TogglePhone(InputAction.CallbackContext context)
@@ -655,7 +699,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         {
             Interactable interact = collision.gameObject.GetComponent<Interactable>();
             //Debug.Log("Contact " + interact.interactableName);
-            if (interact != null && interact.isActiveAndEnabled)
+            if (interact != null && interact.isActiveAndEnabled && GameManager.Instance.IsOpen())
             {
                 interactList.Add(interact);
 

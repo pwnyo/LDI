@@ -31,6 +31,7 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         UNHIDE,
         ALERT
     }
+    public AnimationClip idle, hover, unhover, focus, unfocus, hide, unhide, alert;
 
     public void SetTimeManager(TimeManager tm)
     {
@@ -75,6 +76,29 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             Instance = this;
         else if (Instance != this)
             Destroy(this.gameObject);
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            animator.Play("PhoneFocus");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            animator.Play("PhoneUnfocus");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            animator.Play("PhoneHide");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            animator.Play("PhoneUnhide");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            animator.Play("PhoneAlert");
+        }
     }
     void Start()
     {
@@ -152,12 +176,13 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             putAway.gameObject.SetActive(false);
         }
-        Debug.Log("enter");
+        Debug.Log("focusing phone");
+        GameManager.Instance.inTransition = true;
         StartCoroutine(PlayFocus());
     }
     public void UnfocusButton()
     {
-        if (!GameManager.Instance.inConvo && !IsFocusing())
+        if (!GameManager.Instance.inConvo)
         {
             Unfocus();
         }
@@ -166,6 +191,11 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void Unfocus()
     {
         //pc.SetPlayerState(PlayerControl.PlayerState.BUSY);
+        if (IsFocusing())
+        {
+            return;
+        }
+        GameManager.Instance.inTransition = true;
         StartCoroutine(PlayUnfocus());
     }
     public bool IsInApp()
@@ -186,7 +216,8 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         canvasGroup.interactable = true;
         putAway.gameObject.SetActive(true);
         GameManager.Instance.inTransition = true;
-        animator.SetInteger("State", (int)PhoneState.FOCUS);
+        animator.Play("PhoneFocus");
+        //animator.SetInteger("State", (int)PhoneState.FOCUS);
         isAnimating = true;
         while (isAnimating)
         {
@@ -194,7 +225,8 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
         //yield return new WaitForSeconds(focusAnimationTime);
 
-        animator.SetInteger("State", (int)PhoneState.FOCUSED);
+        animator.Play("PhoneFocused");
+        //animator.SetInteger("State", (int)PhoneState.FOCUSED);
         GameManager.Instance.inTransition = false;
         GameManager.Instance.isPhoneFocused = true;
         EventSystem.current.SetSelectedGameObject(firstButton.gameObject);
@@ -207,11 +239,13 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         canvasGroup.interactable = false;
 
         OpenApp("home");
-        animator.SetInteger("State", (int)PhoneState.UNFOCUS);
+        animator.Play("PhoneUnfocus");
+        //animator.SetInteger("State", (int)PhoneState.UNFOCUS);
         GameManager.Instance.inTransition = true;
         yield return new WaitForSeconds(focusAnimationTime);
 
-        animator.SetInteger("State", (int)PhoneState.NONE);
+        //animator.SetInteger("State", (int)PhoneState.NONE);
+        //animator.Play("PhoneIdle");
         GameManager.Instance.inTransition = false;
         GameManager.Instance.isPhoneFocused = false;
         //putAway.gameObject.SetActive(true);
@@ -246,7 +280,8 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         yield return new WaitForSeconds(hideAnimationTime);
 
         animator.SetInteger("State", (int)PhoneState.NONE);
-        GameManager.Instance.inTransition = false;
+        //TODO: Check what's up with this -- quick phone works with this commented out, but this may cause issues elsewhere
+        //GameManager.Instance.inTransition = false;
         GameManager.Instance.isPhoneFocused = false;
         //pc.SetPlayerState(PlayerControl.PlayerState.NONE);
         Debug.Log("Unhide");
@@ -341,12 +376,12 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         tManager.ForceOpen(contactName, m);
         if (phoneApp != PhoneApp.TEXTS)
         {
-            StartCoroutine(Test(.5f));
+            StartCoroutine(ForceText(0f));
         }
     }
-    IEnumerator Test(float dur)
+    IEnumerator ForceText(float dur)
     {
-        Debug.Log("test");
+        Debug.Log("forcing texts");
         yield return new WaitForSeconds(dur);
         Focus();
         OpenApp("texts");
@@ -367,5 +402,9 @@ public class PhoneManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void FinishAnimation()
     {
         isAnimating = false;
+    }
+    public void TestAnim(string state)
+    {
+        animator.Play(state);
     }
 }

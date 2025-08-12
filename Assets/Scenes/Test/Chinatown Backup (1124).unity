@@ -3022,6 +3022,7 @@ MonoBehaviour:
   text: {fileID: 0}
   canvasGroup: {fileID: 0}
   rect: {fileID: 223488520}
+  state: 0
 --- !u!1 &232941209
 GameObject:
   m_ObjectHideFlags: 0
@@ -4291,6 +4292,7 @@ MonoBehaviour:
   text: {fileID: 1053376283}
   canvasGroup: {fileID: 329170913}
   rect: {fileID: 329170911}
+  state: 0
 --- !u!225 &329170913
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6329,6 +6331,7 @@ MonoBehaviour:
   text: {fileID: 0}
   canvasGroup: {fileID: 0}
   rect: {fileID: 501252932}
+  state: 0
 --- !u!1 &511388575
 GameObject:
   m_ObjectHideFlags: 0
@@ -7909,6 +7912,7 @@ MonoBehaviour:
   text: {fileID: 0}
   canvasGroup: {fileID: 0}
   rect: {fileID: 638140817}
+  state: 0
 --- !u!1 &642702711
 GameObject:
   m_ObjectHideFlags: 0
@@ -10504,7 +10508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbdd1fb23e54b1498c8994d162c59bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceName: 
+  title: 
+  subtitle: 
   notes:
   - note:
       noteKey: 0
@@ -10516,12 +10521,7 @@ MonoBehaviour:
       noteKey: 9
     duration: 0.25
   useSharps: 0
-  successEvents:
-    m_PersistentCalls:
-      m_Calls: []
-  failEvents:
-    m_PersistentCalls:
-      m_Calls: []
+  isDone: 0
 --- !u!114 &862089287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10553,8 +10553,16 @@ MonoBehaviour:
   blackPress: {r: 0.17254902, g: 0.16862746, b: 0.16862746, a: 0.7490196}
   whiteNorm: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
   whitePress: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 0.7490196}
-  maxKeys: 5
-  isOpen: 1
+  successEase: 0
+  successGroup: {fileID: 0}
+  successAnim: {fileID: 0}
+  successEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  failEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  currentNoteUI: {fileID: 0}
   noteUIPool:
   - {fileID: 329170912}
   - {fileID: 1525526857}
@@ -10592,7 +10600,22 @@ MonoBehaviour:
   - {fileID: 862089286}
   currentPiece: {fileID: 862089286}
   state: 0
+  musicPlayer: {fileID: 0}
   showingPiece: 0
+  pieceUIList: []
+  canvasGroup: {fileID: 0}
+  piano: {fileID: 0}
+  staff: {fileID: 0}
+  folderAnimator: {fileID: 0}
+  background: {fileID: 0}
+  easeType: 0
+  lightColor: {r: 0, g: 0, b: 0, a: 0}
+  darkColor: {r: 0, g: 0, b: 0, a: 0}
+  minX: 0
+  maxX: 0
+  minY: 0
+  maxY: 0
+  duration: 0
 --- !u!1 &882413534
 GameObject:
   m_ObjectHideFlags: 0
@@ -13965,6 +13988,7 @@ MonoBehaviour:
   text: {fileID: 0}
   canvasGroup: {fileID: 0}
   rect: {fileID: 1142598654}
+  state: 0
 --- !u!1 &1146060772
 GameObject:
   m_ObjectHideFlags: 0
@@ -19132,6 +19156,7 @@ MonoBehaviour:
   text: {fileID: 1882259276}
   canvasGroup: {fileID: 1525526856}
   rect: {fileID: 1525526855}
+  state: 0
 --- !u!1 &1540056357
 GameObject:
   m_ObjectHideFlags: 0
@@ -21616,6 +21641,7 @@ MonoBehaviour:
   text: {fileID: 0}
   canvasGroup: {fileID: 0}
   rect: {fileID: 1750300737}
+  state: 0
 --- !u!1 &1775958389
 GameObject:
   m_ObjectHideFlags: 0
@@ -21940,6 +21966,7 @@ MonoBehaviour:
   text: {fileID: 616108494}
   canvasGroup: {fileID: 1788162017}
   rect: {fileID: 1788162016}
+  state: 0
 --- !u!1 &1789388619
 GameObject:
   m_ObjectHideFlags: 0
@@ -23389,6 +23416,7 @@ MonoBehaviour:
   text: {fileID: 709110673}
   canvasGroup: {fileID: 1914955934}
   rect: {fileID: 1914955933}
+  state: 0
 --- !u!1 &1929760954
 GameObject:
   m_ObjectHideFlags: 0
@@ -24421,6 +24449,7 @@ MonoBehaviour:
   text: {fileID: 1090103631}
   canvasGroup: {fileID: 2078844728}
   rect: {fileID: 2078844727}
+  state: 0
 --- !u!1 &2078924580
 GameObject:
   m_ObjectHideFlags: 0
@@ -24490,6 +24519,7 @@ MonoBehaviour:
   text: {fileID: 0}
   canvasGroup: {fileID: 0}
   rect: {fileID: 2078924581}
+  state: 0
 --- !u!1 &2080834431
 GameObject:
   m_ObjectHideFlags: 0
@@ -26027,6 +26057,7 @@ MonoBehaviour:
   text: {fileID: 0}
   canvasGroup: {fileID: 0}
   rect: {fileID: 4152010645579558689}
+  state: 0
 --- !u!114 &1703197810642218544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30427,6 +30458,7 @@ MonoBehaviour:
   text: {fileID: 0}
   canvasGroup: {fileID: 0}
   rect: {fileID: 5792779903886486862}
+  state: 0
 --- !u!224 &5792779903886486862
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31472,15 +31504,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbdd1fb23e54b1498c8994d162c59bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceName: 
+  title: 
+  subtitle: 
   notes: []
   useSharps: 0
-  successEvents:
-    m_PersistentCalls:
-      m_Calls: []
-  failEvents:
-    m_PersistentCalls:
-      m_Calls: []
+  isDone: 0
 --- !u!224 &5792779904158626838
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31534,8 +31562,16 @@ MonoBehaviour:
   blackPress: {r: 0.17254902, g: 0.16862746, b: 0.16862746, a: 0.7490196}
   whiteNorm: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
   whitePress: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 0.7490196}
-  maxKeys: 0
-  isOpen: 0
+  successEase: 0
+  successGroup: {fileID: 0}
+  successAnim: {fileID: 0}
+  successEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  failEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  currentNoteUI: {fileID: 0}
   noteUIPool: []
   sheetTransform: {fileID: 5792779903886486862}
   vSpacing: 25
@@ -36606,6 +36642,7 @@ MonoBehaviour:
   interactArrow: {fileID: 2274337107191239892}
   spriteRenderer: {fileID: 8512526815944745609}
   altSpriteRenderer: {fileID: 6649552196267743995}
+  activeInteractableMaterial: {fileID: 0}
   interactMinDistance: 0
   altSprites:
   - expression: lay0

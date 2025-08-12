@@ -23,6 +23,8 @@ public class VariableManager : Yarn.Unity.VariableStorageBehaviour
     [SerializeField]
     internal RectTransform debugTextBox = null;
 
+    public Dictionary<string, bool> playedNodes;
+
     internal void Awake()
     {
         //ResetToDefaults();

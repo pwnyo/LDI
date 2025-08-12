@@ -25,6 +25,7 @@ public class DebugHelper : MonoBehaviour
     public Button[] buttons;
     private bool isVisible;
     private bool isOpen;
+    public bool showLog = true;
 
     [Header("Debug Vars")]
     [SerializeField]
@@ -163,6 +164,10 @@ public class DebugHelper : MonoBehaviour
     public float QuickHoldMultiplier()
     {
         return GameManager.Instance.debugMode ? quickHoldMultiplier : 1f;
+    }
+
+    public void Log(string msg, int severity = 0)
+    {
     }
     #endregion
 }
