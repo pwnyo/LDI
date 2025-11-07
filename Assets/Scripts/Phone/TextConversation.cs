@@ -22,6 +22,8 @@ public class TextConversation : MonoBehaviour
 
         return grandChild.GetChild(transform.childCount).GetComponent<TextMessage>();
     }
+    //TODO: Replace this - can be worked around by just sending the current conversation partner
+    //      to Yarn or tracking it in another way
     public List<Button> GetButtons()
     {
         List<Button> list = new List<Button>();

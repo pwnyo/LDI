@@ -22,8 +22,11 @@ public class TextMessage : MonoBehaviour
 
     private void Awake()
     {
-        if (defaultMessage.content.Length > 0)
+        if (!(PhoneManager.Instance && PhoneManager.Instance.IsReady) && defaultMessage.content.Length > 0)
+        {
+            Debug.Log($"pushing default message {defaultMessage.content}");
             Push(defaultMessage);
+        }
     }
     private void Start()
     {

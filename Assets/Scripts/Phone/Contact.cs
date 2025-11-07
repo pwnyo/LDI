@@ -33,7 +33,7 @@ public class Contact : MonoBehaviour
         }
         buttons = convo.GetButtons();
         if (buttons == null || buttons.Count < 2)
-            Debug.LogWarning("buttons not counted correctly");
+            Debug.LogWarning($"buttons not counted correctly for {contactName}");
     }
     public void GetMessage(Message m)
     {

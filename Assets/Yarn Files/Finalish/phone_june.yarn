@@ -105,7 +105,7 @@ Eddy: Thanks T_T
 title: phone_june_d1
 ---
 <<textcontact DialogueCanvas June>>
-June: how'd your day go? :3
+June: how'd your day go? ;3
 <<if $tasks > 2>>
     Eddy: Not bad actually! Somehow got most of what I need done.
     June: That's good news!

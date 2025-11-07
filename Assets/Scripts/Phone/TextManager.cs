@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class TextManager : AppManager
@@ -9,9 +10,7 @@ public class TextManager : AppManager
     [SerializeField]
     private Contact[] contacts;
     [SerializeField]
-    private GameObject buttonParent;
-    [SerializeField]
-    private Button[] buttons;
+    private GameObject optionButtonParent;
     public GameObject contactContainer;
     public Animator notificationAnimator;
     public TextMeshProUGUI currentContactName;
@@ -48,7 +47,7 @@ public class TextManager : AppManager
                     GameDialogueManager.Instance.dui.optionButtons = c.buttons;
             }
         }
-        buttonParent.SetActive(true);
+        optionButtonParent.SetActive(true);
     }
     public void Notify(string contactName, Message m)
     {
@@ -62,7 +61,7 @@ public class TextManager : AppManager
                 c.transform.SetAsFirstSibling();
                 c.Notify(m);
                 
-                if (PhoneManager.Instance.phoneApp != PhoneManager.PhoneApp.TEXTS)
+                if (PhoneManager.Instance.currentApp != PhoneManager.PhoneApp.TEXTS)
                     notif.Show(1f, .25f, .25f);
 
                 return;
@@ -84,8 +83,45 @@ public class TextManager : AppManager
             }
         }
     }
+    public override void SelectOption(InputAction.CallbackContext context)
+    {
+        if (expanded && !GameDialogueManager.Instance.IsWaitingForOptions())
+        {
+            return;
+        }
+        if (GameManager.Instance.inConvo ||
+            buttons == null || buttons.Count == 0 || buttonIndex < 0 || buttonIndex >= buttons.Count)
+        {
+            return;
+        }
+        buttons[buttonIndex].onClick.Invoke();
+    }
+
+    public override void Navigate(Vector2 input)
+    {
+        if (input.y > 0.1)
+        {
+            CheckOption(buttonIndex - 1);
+        }
+        else if (input.y < -0.1)
+        {
+            CheckOption(buttonIndex + 1);
+        }
+    }
+    public override void Focus()
+    {
+        if (expanded)
+        {
+            Back();
+        }
+        base.Focus();
+    }
     public override void Back()
     {
+        if (GameManager.Instance.inConvo)
+        {
+            return;
+        }
         base.Back();
         if (expanded)
         {
@@ -95,11 +131,11 @@ public class TextManager : AppManager
             }
             currentContactName.text = "";
             contactContainer.SetActive(true);
-            buttonParent.SetActive(false);
+            optionButtonParent.SetActive(false);
         }
         else
         {
-            if (PhoneManager.Instance.phoneApp != PhoneManager.PhoneApp.HOME)
+            if (PhoneManager.Instance.currentApp != PhoneManager.PhoneApp.HOME)
                 PhoneManager.Instance.OpenApp("home");
         }
         expanded = false;

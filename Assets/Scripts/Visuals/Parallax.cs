@@ -14,8 +14,9 @@ public class Parallax : MonoBehaviour
     public Vector2 parallaxSpeed;
 
     [Header("Bounds")]
-    public Vector2 upperBounds;
-    public Vector2 lowerBounds;
+    public Transform parentObj;
+    public Vector2 bottomLeft;
+    public Vector2 topRight;
     Vector3 previousCamPos;
 
     // Start is called before the first frame update
@@ -27,6 +28,12 @@ public class Parallax : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Redraw();
+    }
+
+    public void Redraw()
+    {
+        /*
         if (distance.x != 0f)
         {
             float parallaxX = (previousCamPos.x - cam.position.x) * distance.x;
@@ -45,10 +52,9 @@ public class Parallax : MonoBehaviour
 
             transform.position = Vector3.Lerp(transform.position, backgroundTargetPosY, Time.deltaTime);
         }
-        previousCamPos = cam.position;
-        //Debug.Log(previousCamPos);
-    }
+        previousCamPos = cam.position;*/
 
+    }
 
     private void OnDrawGizmos()
     {
@@ -63,11 +69,12 @@ public class Parallax : MonoBehaviour
         //Vector2 center = new Vector2((transform.position.x - botLeft.x)
 
         //Gizmos.DrawWireCube(new Vector2(botLeft.x + topRight.x / 2f, botLeft.y + topRight.y / 2f), new Vector2(width, height));*/
-        Vector3 tl = new Vector3(transform.position.x - lowerBounds.x, transform.position.y + upperBounds.y);
-        Vector3 br = new Vector3(transform.position.x + upperBounds.x, transform.position.y - lowerBounds.y);
-        Vector3 center = new Vector3(tl.x + br.x / 2, tl.y + br.y / 2);
-        Gizmos.DrawWireSphere(tl, .1f);
-        Gizmos.DrawWireSphere(br, .1f);
-        Gizmos.DrawWireCube(center, new Vector3(tl.x - br.x, tl.y - br.y));
+        //Vector3 bottomLeft = new Vector3(transform.position.x - this.topRightCorner.x, transform.position.y + bottomLeftCorner.y);
+        //Vector3 topRight = new Vector3(transform.position.x + this.bottomLeftCorner.x, transform.position.y - topRightCorner.y);
+        Vector3 center = new Vector3(bottomLeft.x + topRight.x / 2f, bottomLeft.y + topRight.y / 2f);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(bottomLeft, .2f);
+        Gizmos.DrawWireSphere(topRight, .2f);
+        Gizmos.DrawWireCube(center, new Vector3(bottomLeft.x - topRight.x, bottomLeft.y - topRight.y));
     }
 }

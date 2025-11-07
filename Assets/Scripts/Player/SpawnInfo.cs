@@ -22,7 +22,7 @@ public class SpawnInfo : MonoBehaviour
     {
         if (spawnPoints == null)
             return;
-        Gizmos.color = Color.black;
+        Gizmos.color = Color.white;
         foreach (LevelLoader.SpawnPoint s in spawnPoints)
         {
             Gizmos.DrawWireSphere(s.location, 0.15f);

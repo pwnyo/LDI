@@ -82,9 +82,14 @@ public class TimeManager : MonoBehaviour
     {
         SetDay(GameManager.Instance.CurrentDay);
 
-        SetTimeOfDay(GameManager.Instance.CurrentTimeOfDay);
-        if (!ignoreGameTime)
+        if (ignoreGameTime)
+        {
+            SetTimeOfDay(timeOfDay);
+        }
+        else
+        {
             SetTimeOfDay(GameManager.Instance.CurrentTimeOfDay);
+        }
 
         Debug.Log("beginning");
     }
@@ -126,6 +131,10 @@ public class TimeManager : MonoBehaviour
             GameManager.Instance.SetDay(num);
             for (int i = 0; i < days.Length; i++)
             {
+                if (days[i] == null)
+                {
+                    continue;
+                }
                 days[i].HideAll();
                 if (i == num)
                 {
@@ -192,12 +201,11 @@ public class TimeManager : MonoBehaviour
     {
         bool autoplay = tod == GameManager.Instance.CurrentTimeOfDay;
         GameManager.Instance.SetTimeOfDay(tod);
-        Debug.Log(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         
         any.ShowTimeOfDay(tod, autoplay);
         days[GameManager.Instance.CurrentDay].ShowTimeOfDay(tod, autoplay);
 
-        Debug.Log($"Time of day: {tod}");
+        Debug.Log($"Time of day: {tod}, Scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
     }
     void PrevTimeOfDay()
     {

@@ -42,17 +42,17 @@ public class TalkMessage : MonoBehaviour
 
     public void Push(Message m, Sprite s = null)
     {
-        Debug.Log($"{m.header}: {m.content}");
+        Debug.Log($"{m.header}:{m.content}");
         speaker.text = m.header;
         if (m.header.Length > 0)
         {
             if (isViet)
             {
-                CurrentSpeakerFull = $"<color=white>{m.header}</color>:";
+                CurrentSpeakerFull = $"<color=#{ColorUtility.ToHtmlStringRGBA(vNameColor)}>{m.header}</color>:";
             }
             else
             {
-                CurrentSpeakerFull = $"<color=yellow>{m.header}</color>:";
+                CurrentSpeakerFull = $"<color=#{ColorUtility.ToHtmlStringRGBA(eNameColor)}>{m.header}</color>:";
             }
             CurrentSpeechFull = $"{CurrentSpeakerFull}{m.content}";
             speech.text = CurrentSpeechFull;
@@ -83,6 +83,10 @@ public class TalkMessage : MonoBehaviour
     }
     public void ResetFace()
     {
+        if (!talkAnimator.isActiveAndEnabled)
+        {
+            return;
+        }
         talkAnimator.ResetTrigger("ChangeFace");
         currentExpression = "";
     }
@@ -113,17 +117,11 @@ public class TalkMessage : MonoBehaviour
     void SetFace()
     {
         face.enabled = true;
-        Sprite sp = faceManager.GetFaceFromName(currentExpression, CurrentSpeakerName);
-        if (sp != null)
-        {
-            face.sprite = faceManager.GetFaceFromName(currentExpression, CurrentSpeakerName);
-        }
-        else
-        {
-            face.sprite = faceManager.GetDefaultFace(currentExpression);
-        }
+        Sprite sp = faceManager.GetFaceFromName(CurrentSpeakerName, currentExpression);
+        face.sprite = sp;
         if (!faceManager.IsNamedCharacter(CurrentSpeakerName))
         {
+            //TODO: needs extra handling for the box to align text when there's no image (e.g. an unnamed NPC)
             face.enabled = false;
         }
     }

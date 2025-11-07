@@ -10,6 +10,7 @@ public class InputHelper : MonoBehaviour
     public InputAction moveAction;
     public InputAction jumpAction;
     public InputAction interactAction;
+    public InputAction backAction;
     public InputAction sneakAction;
     public InputAction phoneAction;
     public InputAction resetAction;
@@ -31,7 +32,6 @@ public class InputHelper : MonoBehaviour
     public InputAction bKey;
     public InputAction c2Key;
     public InputAction[] pianoKeys;
-    InputAction allActions;
 
     public static InputHelper Instance { get; private set; }
     public DeviceType ActiveDevice { get; private set; }
@@ -50,6 +50,7 @@ public class InputHelper : MonoBehaviour
         moveAction = input.actions["Move"];
         jumpAction = input.actions["Jump"];
         interactAction = input.actions["Interact"];
+        backAction = input.actions["Back"];
         sneakAction = input.actions["Sneak"];
         phoneAction = input.actions["TogglePhone"];
         resetAction = input.actions["Reset"];
@@ -85,5 +86,15 @@ public class InputHelper : MonoBehaviour
         {
             ActiveDevice = DeviceType.GAMEPAD;
         }
+    }
+    public Sprite GetIconForAction(string actionName)
+    {
+        if (input.actions[actionName] == null)
+        {
+            Debug.LogWarning($"tried to find an action that doesn't exist: {actionName}");
+            return null;
+        }
+
+        return null;
     }
 }

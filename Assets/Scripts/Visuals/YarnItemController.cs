@@ -34,12 +34,12 @@ public class YarnItemController : MonoBehaviour
     [YarnCommand("yarnon")]
     public void Show(string itemName)
     {
-        Debug.Log("show?");
+        Debug.Log($"trying to show {itemName}");
         foreach (YarnItem y in items)
         {
             if (y != null && y.id == itemName)
             {
-                y.Show(true);
+                y.ShowObject(true);
                 Debug.Log("showing");
             }
         }
@@ -47,12 +47,12 @@ public class YarnItemController : MonoBehaviour
     [YarnCommand("yarnoff")]
     public void Hide(string itemName)
     {
-        Debug.Log("hide?");
+        Debug.Log($"trying to hide {itemName}");
         foreach (YarnItem y in items)
         {
             if (y != null && y.id == itemName)
             {
-                y.Show(false);
+                y.ShowObject(false);
                 Debug.Log("hiding");
             }
         }
@@ -67,14 +67,14 @@ public class YarnItemController : MonoBehaviour
         {
             if (y != null && y.id == id)
             {
-                y.Show(true);
+                y.ShowObject(true);
                 y.Animate(state);
                 Debug.Log("animating");
             }
         }
     }
-    [YarnCommand("yarnsprite")]
-    public void SetSprite(string[] param)
+    [YarnCommand("yarnalt")]
+    public void SetAltSprite(string[] param)
     {
         string itemName = param[0];
         string spriteName = param[1];
@@ -82,13 +82,13 @@ public class YarnItemController : MonoBehaviour
         {
             if (y != null && y.id == itemName)
             {
-                y.ShowSprite(spriteName);
-                Debug.Log("spriting");
+                y.UseAltSprite(spriteName);
+                Debug.Log("alt spriting");
             }
         }
     }
-    [YarnCommand("yarnenable")]
-    public void EnableSprite(string[] param)
+    [YarnCommand("yarnsprite")]
+    public void ShowSpriteRenderer(string[] param)
     {
         string itemName = param[0];
         string setting = param[1];
@@ -96,7 +96,7 @@ public class YarnItemController : MonoBehaviour
         {
             if (y != null && y.id == itemName)
             {
-                y.EnableSprite(setting == "true");
+                y.ShowSpriteRenderer(setting == "true");
                 Debug.Log("spriting");
             }
         }

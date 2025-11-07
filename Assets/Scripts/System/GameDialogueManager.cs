@@ -13,6 +13,7 @@ using UnityEngine.InputSystem;
 public class GameDialogueManager : MonoBehaviour
 {
     public static GameDialogueManager Instance { get; private set; }
+
     public DialogueRunner dr;
     public DialogueUI dui;
     public PhoneManager phoneManager;
@@ -85,11 +86,13 @@ public class GameDialogueManager : MonoBehaviour
 
     [Header("Exposition")]
     public GameObject expositionObject;
-    public Animator expositionAnimator;
-    public TextMeshProUGUI expositionText;
-    public float expoHoldTime, expoWaitTime;
+    public GameObject expoSubObject;
+    public Animator expositionAnimator, expoSubAnimator;
+    public TextMeshProUGUI expositionText, expoSubtext;
+    public float expoHoldTime, expoWaitTime, expoSubDelayTime;
 
     [Header("Other Vars")]
+    private bool ignorePauseOnStart;
     public DebugHelper debugHelper;
     private DialogueState prevState;
     public float quickNextTime;
@@ -101,6 +104,7 @@ public class GameDialogueManager : MonoBehaviour
     private List<Button> buttons;
     private int buttonCount;
     private int buttonIndex;
+
 
     private void Awake()
     {
@@ -134,7 +138,7 @@ public class GameDialogueManager : MonoBehaviour
     {
         if (dialogueState != DialogueState.NONE)
         {
-            if (isHolding && !GameManager.Instance.inTransition)
+            if (isHolding && GameManager.Instance.CanProgressDialogue())
             {
                 float targetTime = 1f;
                 if (dialogueState == DialogueState.TALK)
@@ -174,7 +178,7 @@ public class GameDialogueManager : MonoBehaviour
     }
     void Navigate(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.inTransition || dialogueState == DialogueState.NONE || !waitingForOptions)
+        if (!GameManager.Instance.CanProgressDialogue() || dialogueState == DialogueState.NONE || !waitingForOptions)
         {
             return;
         }
@@ -199,7 +203,7 @@ public class GameDialogueManager : MonoBehaviour
     }
     void Select(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.inTransition || dialogueState == DialogueState.NONE || !waitingForOptions || 
+        if (!GameManager.Instance.CanProgressDialogue() || dialogueState == DialogueState.NONE || !waitingForOptions || 
             buttons == null || buttons.Count == 0 || buttonIndex < 0 || buttonIndex >= buttons.Count)
         {
             return;
@@ -214,10 +218,17 @@ public class GameDialogueManager : MonoBehaviour
         }
         if (dialogueState != DialogueState.NONE)
         {
-            PlayerControl.Instance.SetPlayerState(PlayerControl.PlayerState.BUSY);
-            GameManager.Instance.inConvo = true;
+            if (ignorePauseOnStart)
+            {
+                ignorePauseOnStart = false;
+            }
+            else
+            {
+                PlayerControl.Instance.Pause();
+                GameManager.Instance.inConvo = true;
+            }
         }
-        PlayerControl.Instance.DisableInteractArrow();
+        PlayerControl.Instance.DisableInteractArrow(true);
     }
     public void StopDialogue()
     {
@@ -229,16 +240,22 @@ public class GameDialogueManager : MonoBehaviour
         else
         {
             HideAll();
-            PlayerControl.Instance.SetPlayerState(PlayerControl.PlayerState.NONE);
             GameManager.Instance.inConvo = false;
+            Debug.Log("stopping dialogue");
         }
     }
+    public void IgnorePauseOnStart()
+    {
+        ignorePauseOnStart = true;
+    }
+    /// <summary>
+    /// Puts away everything dialogue-related and re-enables player state
+    /// </summary>
     void HideAll()
     {
         nextHoldTime = 0;
         PhoneManager.Instance.ClearBackable();
-        PlayerControl.Instance.SetPlayerState(PlayerControl.PlayerState.NONE);
-        PlayerControl.Instance.EnableInteractArrow();
+        PlayerControl.Instance.EnableInteractArrow(true);
 
         SetBlinker(false);
         isWaiting = false;
@@ -269,23 +286,29 @@ public class GameDialogueManager : MonoBehaviour
             buttons[index].Select();
         }
     }
+    public bool IsWaitingForOptions()
+    {
+        return waitingForOptions;
+    }
     public void StartOptions()
     {
         waitingForOptions = true;
         buttons = dui.optionButtons;
         buttonIndex = 0;
+        buttonCount = 0;
 
         if (buttons == null || buttons.Count <= 0)
         {
             return;
         }
-        int count = 0;
         foreach (Button b in buttons)
         {
             if (b.isActiveAndEnabled)
-                count++;
+            {
+                buttonCount++;
+            }
         }
-        buttonCount = count;
+        Debug.Log($"dialogue option button count: {buttonCount}");
 
         buttons[0].Select();
     }
@@ -303,7 +326,7 @@ public class GameDialogueManager : MonoBehaviour
     {
         currentContactName = contactName;
         dialogueState = DialogueState.TEXT;
-        PhoneManager.Instance.tManager.SetBackable(false);
+        PhoneManager.Instance.ForceTextBackable(false);
     }
     [YarnCommand("hidetalk")]
     public void HideTalk()
@@ -321,8 +344,8 @@ public class GameDialogueManager : MonoBehaviour
         else if (setting == "text")
         {
             dialogueState = DialogueState.TEXT;
-            PhoneManager.Instance.tManager.SetBackable(false);
-            PhoneManager.Instance.Focus();
+            PhoneManager.Instance.ForceTextBackable(false);
+            PhoneManager.Instance.FocusPhone();
         }
         else if (setting == "whisper")
         {
@@ -407,7 +430,7 @@ public class GameDialogueManager : MonoBehaviour
     }
     Message ParseLinesToMessage(string line)
     {
-        Message m = new Message();
+        Message m;
         string[] lines = line.Split(new char[] { ':' }, 3);
 
         if (lines.Length > 1)
@@ -469,22 +492,32 @@ public class GameDialogueManager : MonoBehaviour
     {
         Debug.Log("Trying to exposit " + line);
         HideAll();
-        expositionText.text = line;
-        StartCoroutine(Exposition());
+        dialogueState = DialogueState.EXPO;
+        Message m = ParseLinesToMessage(line);
+        StartCoroutine(Exposition(m.header, m.content));
     }
-    IEnumerator Exposition()
+    IEnumerator Exposition(string topLine, string bottomLine = "")
     {
+        expositionText.text = topLine;
         expositionObject.SetActive(true);
+
+        dui.MarkLineComplete();
+
+        if (!string.IsNullOrEmpty(bottomLine))
+        {
+            //yield return new WaitForSeconds(expoSubDelayTime);
+            expoSubtext.text = bottomLine;
+            expoSubObject.SetActive(true);
+        }
         yield return new WaitForSeconds(expoHoldTime);
-        expositionAnimator.SetTrigger("Start");
-        yield return new WaitForSeconds(expoWaitTime / 2f);
+        //yield return new WaitForSeconds(expoWaitTime);
+
+        dui.MarkLineComplete();
+        dialogueState = dr.IsDialogueRunning ? prevState : DialogueState.NONE;
+        Debug.Log("returning to prev dialogue state " + dialogueState);
 
         expositionObject.SetActive(false);
-        dui.MarkLineComplete();
-        dialogueState = prevState;
-        yield return new WaitForSeconds(expoWaitTime / 2f);
-
-        expositionAnimator.ResetTrigger("Start");
+        expoSubObject.SetActive(false);
     }
     void TalkLine(string line)
     {
@@ -691,16 +724,17 @@ public class GameDialogueManager : MonoBehaviour
         SetBlinker(true);
         SetContinue();
     }
+    //TODO: Still uses the old style
     IEnumerator ShowPhone(string line)
     {
         isWaitingForPhone = true;
         //PhoneManager.Instance.Alert();
         phoneManager.Alert();
         sfxSource.PlayOneShot(sounds[0]);
-        yield return new WaitForSeconds(PhoneManager.Instance.alertAnimationTime);
+        yield return new WaitForSeconds(PhoneManager.Instance.alert.length);
         //PhoneManager.Instance.Focus();
-        phoneManager.Focus();
-        yield return new WaitForSeconds(PhoneManager.Instance.focusAnimationTime + 0.1f);
+        phoneManager.FocusPhone();
+        yield return new WaitForSeconds(PhoneManager.Instance.focus.length + 0.1f);
         isWaitingForPhone = false;
 
         talker.gameObject.SetActive(false);
@@ -708,26 +742,20 @@ public class GameDialogueManager : MonoBehaviour
     }
     IEnumerator ClosePhone()
     {
-        //PhoneManager.Instance.Unfocus();
-        phoneManager.Unfocus();
-        yield return new WaitForSeconds(PhoneManager.Instance.hideAnimationTime - 0.5f);
+        phoneManager.UnfocusPhone();
+        yield return new WaitForSeconds(PhoneManager.Instance.hide.length - 0.2f);
         HideAll();
         GameManager.Instance.inConvo = false;
     }
     [YarnCommand("putawayphone")]
     public void PutAwayPhone()
     {
-        StartCoroutine(HidePhone());
-    }
-    IEnumerator HidePhone()
-    {
-        phoneManager.Unfocus();
-        yield return new WaitForSeconds(PhoneManager.Instance.hideAnimationTime - 0.5f);
+        phoneManager.UnfocusPhone();
     }
 
     public void Next()
     {
-        if (GameManager.Instance.inTransition)
+        if (!GameManager.Instance.CanProgressDialogue() || PhoneManager.Instance.IsAnimating() || waitingForOptions)
         {
             return;
         }
@@ -764,6 +792,16 @@ public class GameDialogueManager : MonoBehaviour
     }
     public void SetBlinker(bool setting)
     {
+        if (!blinker.isActiveAndEnabled)
+        {
+            return;
+        }
         blinker.SetBool("On", setting);
+    }
+    public void OnSceneChange(string newSceneName)
+    {
+        dr.variableStorage.SetValue("$currentscene", newSceneName);
+        expositionObject.SetActive(false);
+        expoSubObject.SetActive(false);
     }
 }

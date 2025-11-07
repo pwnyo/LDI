@@ -8,6 +8,7 @@ public class Talker : Interactable
     //Reference to phone UI, to be able to send text notifications?
     DialogueRunner dialogueRunner;
     public string nodeName, dontTriggerCondition;
+    public bool ignorePauseOnStart;
     public ScheduledDialogue[] scheduledDialogues;
 
     [Header("Optional")]
@@ -41,6 +42,10 @@ public class Talker : Interactable
                 {
                     return;
                 }
+            }
+            if (ignorePauseOnStart)
+            {
+                GameDialogueManager.Instance.IgnorePauseOnStart();
             }
             dialogueRunner.StartDialogue(nodeName);
             return;

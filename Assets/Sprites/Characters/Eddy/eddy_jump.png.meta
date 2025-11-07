@@ -39,7 +39,7 @@ TextureImporter:
       213: -9105385151932898764
     second: eddy_jump_11
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -60,6 +60,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -69,8 +70,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -91,11 +92,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -386,6 +390,19 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      eddy_jump_0: -2592713981956974180
+      eddy_jump_1: 6489781577061927762
+      eddy_jump_10: -7041387946830476227
+      eddy_jump_11: -9105385151932898764
+      eddy_jump_2: -3686039033867463802
+      eddy_jump_3: 8328089193026313213
+      eddy_jump_4: 8395972668908279783
+      eddy_jump_5: -5181769341862417410
+      eddy_jump_6: -2145225352043663328
+      eddy_jump_7: 7497570713396962498
+      eddy_jump_8: 2551039235654218147
+      eddy_jump_9: 5522738127918782782
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -60,7 +60,7 @@ public class PlayerControl2 : MonoBehaviour, ISoundMaker
 
     #region Sprites
     [Header("Sprites")]
-    public FaceManager.Face[] altSprites;
+    public FaceSO.SpriteInfo[] altSprites;
     #endregion
 
     #region Variables
@@ -180,13 +180,13 @@ public class PlayerControl2 : MonoBehaviour, ISoundMaker
         if (phoneAction.phase == InputActionPhase.Started)
         {
             Debug.Log(PhoneManager.Instance.phoneState);
-            if (GameManager.Instance.isPhoneFocused)
+            if (PhoneManager.Instance.IsFocused())
             {
-                PhoneManager.Instance.Unfocus();
+                PhoneManager.Instance.UnfocusPhone();
             }
             else
             {
-                PhoneManager.Instance.Focus();
+                PhoneManager.Instance.FocusPhone();
             }
         }
 
@@ -450,11 +450,11 @@ public class PlayerControl2 : MonoBehaviour, ISoundMaker
     [YarnCommand("usealt")]
     public void UseAlt(string spriteName)
     {
-        foreach (FaceManager.Face f in altSprites)
+        foreach (FaceSO.SpriteInfo f in altSprites)
         {
-            if (f.expression == spriteName)
+            if (f.Name == spriteName)
             {
-                altSpriteRenderer.sprite = f.sprite;
+                altSpriteRenderer.sprite = f.Sprite;
                 altSpriteRenderer.enabled = true;
                 spriteRenderer.enabled = false;
             }
@@ -463,9 +463,9 @@ public class PlayerControl2 : MonoBehaviour, ISoundMaker
     [YarnCommand("usebase")]
     public void UseBase()
     {
-        foreach (FaceManager.Face f in altSprites)
+        foreach (FaceSO.SpriteInfo f in altSprites)
         {
-            altSpriteRenderer.sprite = f.sprite;
+            altSpriteRenderer.sprite = f.Sprite;
             altSpriteRenderer.enabled = false;
             spriteRenderer.enabled = true;
         }

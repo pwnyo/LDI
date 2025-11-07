@@ -85,7 +85,7 @@ Eddy: Erm....
 Eddy: Same.
 <<yarnoff YarnController june>>
 <<yarnon YarnController june2>>
-<<yarnenable YarnController player false>>
+<<yarnsprite YarnController player false>>
 <<wait 1>>
 June: Thanks for coming.
 June: Sorry for the unreasonable request.
@@ -93,7 +93,7 @@ Eddy: No, I'm looking forward it!
 June: Same for me.
 <<yarnoff YarnController june2>>
 <<yarnon YarnController june>>
-<<yarnenable YarnController player true>>
+<<yarnsprite YarnController player true>>
 June: Did you... bring them?
 June: Uh, the condoms?
 <<if $condomsdone is false>>

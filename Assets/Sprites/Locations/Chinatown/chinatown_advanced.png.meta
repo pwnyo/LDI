@@ -51,7 +51,7 @@ TextureImporter:
       213: 2994923297924836781
     second: chinatown_advanced_15
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -72,6 +72,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -81,8 +82,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -103,11 +104,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -494,6 +498,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      chinatown_advanced_0: 9192919338641427085
+      chinatown_advanced_1: -5135873642655640043
+      chinatown_advanced_10: -2704520340518528251
+      chinatown_advanced_11: 2707172359509806607
+      chinatown_advanced_12: -2466332778653892220
+      chinatown_advanced_13: 2443360235320298462
+      chinatown_advanced_14: -446479184457517217
+      chinatown_advanced_15: 2994923297924836781
+      chinatown_advanced_2: 4434834169937695413
+      chinatown_advanced_3: -599851320581951566
+      chinatown_advanced_4: -3143384647693799035
+      chinatown_advanced_5: 2172062920702993619
+      chinatown_advanced_6: -4364067498338487943
+      chinatown_advanced_7: -7930060549004315587
+      chinatown_advanced_8: 5850261154328252244
+      chinatown_advanced_9: 226742100520101834
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

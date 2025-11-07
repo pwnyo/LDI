@@ -42,9 +42,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "37913a98-f16f-4bb2-b2ca-02a73f5758bb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Sneak",
                     "type": "Button",
                     "id": "57fd867a-90b4-4149-8d59-c930291f40cc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TogglePhone",
+                    "type": "Button",
+                    "id": "6ab1d250-f17b-4413-8d65-3f61d861c9f1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -63,15 +81,6 @@
                     "name": "Free",
                     "type": "Button",
                     "id": "d36d1d05-386f-44b6-9d42-d72cf5317c5b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "TogglePhone",
-                    "type": "Button",
-                    "id": "6ab1d250-f17b-4413-8d65-3f61d861c9f1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -374,30 +383,8 @@
                 },
                 {
                     "name": "",
-                    "id": "eb311cc0-67e2-41ca-9903-2a2f9bd0881e",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Sneak",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "06b31bce-6307-4447-8232-442c59c1ead2",
                     "path": "<Keyboard>/S",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Sneak",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0169db53-a7ee-46cc-adc4-a5f13a385ef0",
-                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -412,6 +399,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Sneak",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0169db53-a7ee-46cc-adc4-a5f13a385ef0",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Sneak",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -523,28 +521,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Free",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1d4af688-f501-43e6-a396-390eb13b0bcc",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "TogglePhone",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a1746bde-6d26-4984-a75d-7dda9b5e274f",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TogglePhone",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -908,6 +884,50 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb311cc0-67e2-41ca-9903-2a2f9bd0881e",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9497f62-53f4-4a63-bb0b-314e1d117a9c",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d4af688-f501-43e6-a396-390eb13b0bcc",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "TogglePhone",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1746bde-6d26-4984-a75d-7dda9b5e274f",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TogglePhone",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

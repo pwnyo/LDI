@@ -50,13 +50,13 @@ public class Day : MonoBehaviour
     }
     void ShowTimedObject(TimedObjects to, bool autoplay = false)
     {
-        Debug.Log($"showing timed object for {to.name}");
         if (!dr)
             dr = GameDialogueManager.Instance.dr;
         foreach (TimedObjects t in _timesOfDay)
         {
             if (t == to)
             {
+                Debug.Log($"showing timed object for {to.name} - Any {name == "Any"}");
                 t.gameObject.SetActive(true);
                 if (t.nodeToAutoplay.Length > 0 && autoplay)
                 {

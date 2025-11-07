@@ -30,6 +30,10 @@ public class AudioManager : MonoBehaviour
     private string prevClipName;
     private float prevClipTime;
 
+    int currentMasterVolLevel = 10;
+    [Range(-80, 20)]
+    public float mixerMin, mixerMax;
+
     private void Awake()
     {
         if (Instance == null)
@@ -179,7 +183,8 @@ public class AudioManager : MonoBehaviour
             musicSource.Play();
             //slowly raise the volume to desired level over duration of seconds
             Debug.Log($"fading in {name}: {duration}s, {volume} vol");
-            StartCoroutine(FadeMixerGroup.StartFade(musicSource, "vol", duration, volume));
+            volume *= currentMasterVolLevel / 10f;
+            StartCoroutine(FadeMixerGroup.StartFade(musicSource, "MasterVol", duration, volume));
         }
     }
     [YarnCommand("musicout")]
@@ -192,6 +197,12 @@ public class AudioManager : MonoBehaviour
     }
     public void FadeOutMusic(float duration)
     {
-        StartCoroutine(FadeMixerGroup.StartFade(musicSource, "vol", duration, 0));
+        StartCoroutine(FadeMixerGroup.StartFade(musicSource, "MasterVol", duration, 0));
+    }
+    public void AdjustVolumeLevel(string paramName, float newLevel)
+    {
+        float vol = Mathf.LerpUnclamped(0.0001f, 1f, newLevel / 10f);
+        float db = Mathf.Log10(vol) * 20;
+        audioMixer.SetFloat(paramName, db);
     }
 }

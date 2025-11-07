@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 211c9cd1a6b348647ac919b91a2edf5b, type: 3}
+  m_Name: Ellen
+  m_EditorClassIdentifier: 
+  characterName: Ellen
+  faceMap:
+  - name: normal
+    sprite: {fileID: -7767984272873122642, guid: a239b20b32034f947b10f3c284c7b29c,
+      type: 3}
+  - name: away
+    sprite: {fileID: 4418803121181540906, guid: a239b20b32034f947b10f3c284c7b29c,
+      type: 3}
+  - name: evil
+    sprite: {fileID: 479630478146120797, guid: a239b20b32034f947b10f3c284c7b29c, type: 3}
+  - name: skeptical
+    sprite: {fileID: 8726812237429676082, guid: a239b20b32034f947b10f3c284c7b29c,
+      type: 3}
+  - name: smirk
+    sprite: {fileID: 3106317498663283693, guid: a239b20b32034f947b10f3c284c7b29c,
+      type: 3}
+  - name: shock
+    sprite: {fileID: -1858806641640763228, guid: a239b20b32034f947b10f3c284c7b29c,
+      type: 3}
+  - name: tired
+    sprite: {fileID: -2483733710292982772, guid: a239b20b32034f947b10f3c284c7b29c,
+      type: 3}

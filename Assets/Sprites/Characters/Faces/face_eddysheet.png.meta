@@ -42,7 +42,7 @@ TextureImporter:
       213: -2694857383407043016
     second: face_eddysheet_12
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +63,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -72,8 +73,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -94,11 +95,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -410,6 +414,20 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      face_eddysheet_0: -152123430502941993
+      face_eddysheet_1: 7183722297058233753
+      face_eddysheet_10: -4402508810812101200
+      face_eddysheet_11: -5464378245015573001
+      face_eddysheet_12: -2694857383407043016
+      face_eddysheet_2: 1215983458724326503
+      face_eddysheet_3: 1003893942176341073
+      face_eddysheet_4: 3728289442838376858
+      face_eddysheet_5: -4705179275337318819
+      face_eddysheet_6: -3991546660232138964
+      face_eddysheet_7: -1825463659163398108
+      face_eddysheet_8: -3026439605891476501
+      face_eddysheet_9: 1459761932049512005
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

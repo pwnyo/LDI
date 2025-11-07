@@ -1,0 +1,29 @@
+title: dream_start_d0
+---
+<<allowMovement Player false>>
+<<setSpecialState Player CUTSCENEPAUSE >>
+<<playAnimation Player FALLSPIN>>
+<<spawn TransitionCanvas Start>>
+===
+title: dream_jump
+---
+<<setdialogue DialogueCanvas expo >>
+Jump.:Z or Cross
+<<set $sdream_jump to true>>
+===
+title: dream_interact
+---
+<<setdialogue DialogueCanvas expo >>
+Interact.:X or Square
+<<set $sdream_interact to true>>
+===
+title: dream_getup
+---
+<<playAnimation Player FLOOR>>
+<<yarnoff YarnController playerTrail>>
+<<set $sdream_getup to true>>
+<<setdialogue DialogueCanvas expo >>
+Move.:Left stick or arrow keys
+<<wait  0.5>>
+<<setSpecialState Player CUTSCENE >>
+===

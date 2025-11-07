@@ -111,7 +111,7 @@ TextureImporter:
       213: -6831010529983933554
     second: aisle_35
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -132,6 +132,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -141,8 +142,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -163,11 +164,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -962,6 +966,43 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      aisle_0: -689336065302051772
+      aisle_1: -5377032036172799473
+      aisle_10: 7704650304280239082
+      aisle_11: 7180167316810917133
+      aisle_12: 3157727062694687136
+      aisle_13: 9058009987270609600
+      aisle_14: 8024724686603411183
+      aisle_15: 4046128511943952360
+      aisle_16: -6047521264375191822
+      aisle_17: -3461910778900674537
+      aisle_18: 5126093210743191586
+      aisle_19: 1232707653424042070
+      aisle_2: 4237873388677542976
+      aisle_20: -7673574409099735954
+      aisle_21: 3391930825932864362
+      aisle_22: -5215709566610541342
+      aisle_23: -4486630684042081045
+      aisle_24: -195039512172784130
+      aisle_25: 7652166432270065158
+      aisle_26: 846166634399466598
+      aisle_27: -2222454186355082253
+      aisle_28: -9000571875380667416
+      aisle_29: -2588129356088232278
+      aisle_3: 6833002228926878853
+      aisle_30: 1345623061804978720
+      aisle_31: 4750256246381076738
+      aisle_32: 8549443327434538967
+      aisle_33: 3368540982597187821
+      aisle_34: 3557689316152089795
+      aisle_35: -6831010529983933554
+      aisle_4: -2975533108016787981
+      aisle_5: 48671200359852538
+      aisle_6: 2623984326001202136
+      aisle_7: -414369105751779565
+      aisle_8: -8767719037735416300
+      aisle_9: -924912399039116440
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

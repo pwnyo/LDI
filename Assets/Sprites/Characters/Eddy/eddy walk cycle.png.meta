@@ -39,7 +39,7 @@ TextureImporter:
       213: -2960538279322367078
     second: eddy walk cycle_11
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -60,6 +60,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -69,8 +70,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -91,11 +92,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -386,6 +390,19 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      eddy walk cycle_0: 1973636558893924409
+      eddy walk cycle_1: -2274229425936746239
+      eddy walk cycle_10: 7731415391696716909
+      eddy walk cycle_11: -2960538279322367078
+      eddy walk cycle_2: 6187268138145190876
+      eddy walk cycle_3: -4398896968978705693
+      eddy walk cycle_4: 2579459886024162743
+      eddy walk cycle_5: -3601074122382231470
+      eddy walk cycle_6: -1679202837580524859
+      eddy walk cycle_7: -5519017873030025224
+      eddy walk cycle_8: 4295541480285945197
+      eddy walk cycle_9: -8899675870427709819
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

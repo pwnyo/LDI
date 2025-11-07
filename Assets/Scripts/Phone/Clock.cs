@@ -173,7 +173,11 @@ public class Clock : MonoBehaviour
     }
     private void Update()
     {
-        if (!PhoneManager.Instance.IsHidden() && !PhoneManager.Instance.IsInApp() && isTicking && !GameManager.Instance.inConvo)
+        if (!PhoneManager.Instance || PhoneManager.Instance.IsHidden())
+        {
+            return;
+        }
+        if (!PhoneManager.Instance.IsInApp() && isTicking && !GameManager.Instance.inConvo)
         {
             elapsedTime += Time.deltaTime * debugHelper.TimeMultiplier();
             if (elapsedTime > GameManager.Instance.secondsPerMinute)
@@ -294,7 +298,9 @@ public class Clock : MonoBehaviour
         if (scaledSPM == 0)
         {
             StopClock();
-            PhoneManager.Instance.Hide();
+            //TODO: Remove this and make it manual OR
+            //always rely on this to hide the phone
+            //PhoneManager.Instance.Hide();
         }
         else
         {

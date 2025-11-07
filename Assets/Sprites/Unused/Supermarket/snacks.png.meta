@@ -78,7 +78,7 @@ TextureImporter:
       213: -5195629785899825481
     second: snacks_24
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -99,6 +99,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -108,8 +109,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -130,11 +131,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -698,6 +702,32 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      snacks_0: 1420682315626740282
+      snacks_1: -3266481743949625274
+      snacks_10: 6495689100430257185
+      snacks_11: 5668133739256513264
+      snacks_12: 3301111551532748894
+      snacks_13: 1726047766288688678
+      snacks_14: -2489018618435528164
+      snacks_15: -6085756064753046024
+      snacks_16: -4093691009925312118
+      snacks_17: -4272433987133818535
+      snacks_18: -5489015022040822106
+      snacks_19: -4011683944104079053
+      snacks_2: 3626932856893037757
+      snacks_20: 6528720922337709387
+      snacks_21: 3694745544240025816
+      snacks_22: 6822151825394596103
+      snacks_23: -4929117905200767572
+      snacks_24: -5195629785899825481
+      snacks_3: -3429626253035837133
+      snacks_4: 4705832004180782951
+      snacks_5: 7511750618063876256
+      snacks_6: 6498371017968081684
+      snacks_7: 177748627398986276
+      snacks_8: -1088637891907939388
+      snacks_9: -6406405529203793585
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

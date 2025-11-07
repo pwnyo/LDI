@@ -168,7 +168,7 @@ public class GameDialogueManagerOld : MonoBehaviour
         {
             dialogueState = DialogueState.TALK;
         }
-        pc.SetPlayerState(PlayerControl.PlayerState.BUSY);
+        pc.Pause();
         GameManager.Instance.inConvo = true;
     }
     public void StopDialogue()
@@ -181,7 +181,6 @@ public class GameDialogueManagerOld : MonoBehaviour
         else
         {
             HideAll();
-            pc.SetPlayerState(PlayerControl.PlayerState.NONE);
             GameManager.Instance.inConvo = false;
         }
     }
@@ -506,7 +505,7 @@ public class GameDialogueManagerOld : MonoBehaviour
 
             if (expression != null)
             {
-                faceManager.GetFaceFromName(expression);
+                //faceManager.GetFaceFromName(expression);
             }
         }
 
@@ -715,10 +714,10 @@ public class GameDialogueManagerOld : MonoBehaviour
         //PhoneManager.Instance.Alert();
         //uiManager.AlertPhone();
         sfxSource.PlayOneShot(sounds[0]);
-        yield return new WaitForSeconds(PhoneManager.Instance.alertAnimationTime);
+        yield return new WaitForSeconds(PhoneManager.Instance.alert.length);
         //PhoneManager.Instance.Focus();
         //uiManager.FocusPhone();
-        yield return new WaitForSeconds(PhoneManager.Instance.focusAnimationTime + 0.1f);
+        yield return new WaitForSeconds(PhoneManager.Instance.focus.length + 0.1f);
         isWaitingForPhone = false;
 
         talkContainer.gameObject.SetActive(false);
@@ -730,9 +729,8 @@ public class GameDialogueManagerOld : MonoBehaviour
     {
         //PhoneManager.Instance.Unfocus();
         //uiManager.UnfocusPhone();
-        yield return new WaitForSeconds(PhoneManager.Instance.hideAnimationTime - 0.5f);
+        yield return new WaitForSeconds(PhoneManager.Instance.hide.length - 0.5f);
         HideAll();
-        pc.SetPlayerState(PlayerControl.PlayerState.NONE);
         GameManager.Instance.inConvo = false;
     }
     [YarnCommand("putawayphone")]
@@ -744,7 +742,7 @@ public class GameDialogueManagerOld : MonoBehaviour
     {
         //uiManager.UnfocusPhone();
         textOverlay.SetActive(false);
-        yield return new WaitForSeconds(PhoneManager.Instance.hideAnimationTime - 0.5f);
+        yield return new WaitForSeconds(PhoneManager.Instance.hide.length - 0.5f);
     }
 
     public void Next()

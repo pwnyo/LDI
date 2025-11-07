@@ -11,8 +11,17 @@ TextureImporter:
   - first:
       213: -1203061992044325438
     second: eddy_lying_doqn_2
+  - first:
+      213: 1717269704806443616
+    second: eddy_lying_down_0
+  - first:
+      213: 792056444846894057
+    second: eddy_lying_down_1
+  - first:
+      213: -2430548167963531016
+    second: eddy_lying_down_2
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -33,6 +42,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -42,8 +52,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -64,11 +74,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -110,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: eddy_lying_doqn_0
+      name: eddy_lying_down_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,20 +131,20 @@ TextureImporter:
         width: 64
         height: 48
       alignment: 9
-      pivot: {x: 0.85, y: 0.175}
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76fbc619228ca0770800000000000000
-      internalID: 8577888491074797415
+      spriteID: 06a2782b2b7f4d710800000000000000
+      internalID: 1717269704806443616
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: eddy_lying_doqn_1
+      name: eddy_lying_down_1
       rect:
         serializedVersion: 2
         x: 64
@@ -139,20 +152,20 @@ TextureImporter:
         width: 64
         height: 48
       alignment: 9
-      pivot: {x: 0.85, y: 0.175}
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f0981f10d1149c90800000000000000
-      internalID: -7164081521667043085
+      spriteID: 9eb682dd323fdfa00800000000000000
+      internalID: 792056444846894057
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: eddy_lying_doqn_2
+      name: eddy_lying_down_2
       rect:
         serializedVersion: 2
         x: 128
@@ -160,14 +173,14 @@ TextureImporter:
         width: 64
         height: 48
       alignment: 9
-      pivot: {x: 0.85, y: 0.175}
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c59c690e7ddd4fe0800000000000000
-      internalID: -1203061992044325438
+      spriteID: 8f8ae0f9155f44ed0800000000000000
+      internalID: -2430548167963531016
       vertices: []
       indices: 
       edges: []
@@ -182,6 +195,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      eddy_lying_down_0: 1717269704806443616
+      eddy_lying_down_1: 792056444846894057
+      eddy_lying_down_2: -2430548167963531016
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -144,7 +144,7 @@ TextureImporter:
       213: -484041468261666002
     second: supermarket_46
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -165,6 +165,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -174,8 +175,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -196,11 +197,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1226,6 +1230,54 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      supermarket_0: -3859238746032586196
+      supermarket_1: 1003563423581880182
+      supermarket_10: 7847469053842649675
+      supermarket_11: -5141685364785936162
+      supermarket_12: -2574396006937304593
+      supermarket_13: 7153857456303681957
+      supermarket_14: 8785045482305629901
+      supermarket_15: 43440476864697132
+      supermarket_16: -1968080860044660122
+      supermarket_17: 2784698152431957004
+      supermarket_18: 5082913097037725353
+      supermarket_19: -2530148785384849110
+      supermarket_2: -4762209514361990247
+      supermarket_20: 8542826081217911813
+      supermarket_21: -425337409821960295
+      supermarket_22: -5339449938337507360
+      supermarket_23: 4319324973654134054
+      supermarket_24: -4471206833471047281
+      supermarket_25: 2742099624700215160
+      supermarket_26: -4451596616234731775
+      supermarket_27: 8137008250390416499
+      supermarket_28: 3237259750316475407
+      supermarket_29: 3727021574310133823
+      supermarket_3: -2948501965980882112
+      supermarket_30: 8516971732747871866
+      supermarket_31: -7445908147956006416
+      supermarket_32: -6733301231515251222
+      supermarket_33: 3578795367191398714
+      supermarket_34: 4734672770745236867
+      supermarket_35: -2098398526695820548
+      supermarket_36: 5539504928395646799
+      supermarket_37: 4061983499887837390
+      supermarket_38: 5454509633774060742
+      supermarket_39: 5707217518292822329
+      supermarket_4: -1297978264911342644
+      supermarket_40: 4540763235471037823
+      supermarket_41: -328536007458454938
+      supermarket_42: 5100722126970978882
+      supermarket_43: 2371216291574296460
+      supermarket_44: -3666332257438259384
+      supermarket_45: -2479187048048947240
+      supermarket_46: -484041468261666002
+      supermarket_5: 109417750602703305
+      supermarket_6: 3434521895903398526
+      supermarket_7: -1198535385696727241
+      supermarket_8: 9063758595120442192
+      supermarket_9: -7011733041032746231
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

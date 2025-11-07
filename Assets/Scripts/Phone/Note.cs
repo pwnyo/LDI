@@ -6,7 +6,7 @@ using UnityEngine;
 public class Note
 {
     public string header;
-    [TextArea(2, 4)]
+    [TextArea(2, 6)]
     public string content;
     public bool used = false;
 

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 211c9cd1a6b348647ac919b91a2edf5b, type: 3}
+  m_Name: Mom
+  m_EditorClassIdentifier: 
+  characterName: Mom
+  faceMap:
+  - name: normal
+    sprite: {fileID: -6010140894764394632, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}
+  - name: blank
+    sprite: {fileID: 2493361245512505946, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}
+  - name: tired
+    sprite: {fileID: 7647024033332691629, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}
+  - name: angry
+    sprite: {fileID: 4659602765627050331, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}
+  - name: annoyed
+    sprite: {fileID: -819312848467858844, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}
+  - name: happy
+    sprite: {fileID: -8172123296932905592, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}
+  - name: laugh
+    sprite: {fileID: 8946030590573338023, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}
+  - name: smirk
+    sprite: {fileID: -317711160855099398, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}
+  - name: concerned
+    sprite: {fileID: -803809406526302254, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}
+  - name: shock
+    sprite: {fileID: -7523408484169625809, guid: b2f53776dddf7ad4194c2fb43ce2de22,
+      type: 3}

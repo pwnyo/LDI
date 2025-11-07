@@ -16,13 +16,13 @@ Ellen: What do you want?
 Eddy: Did something happen when you went out? You seemed off.
 Ellen: Well....
 Ellen: Don't tell anybody, but actually....
-<size=30>Ellen: I went on a date.</size>
+Ellen: <size=30>I went on a date.</size>
 <<camerashake Cameras .5 .1 100>>
 <<sfxplay Sound thud>>
 <<camerashake Cameras 1 0.1 200 >> 
-<size=70>Eddy: WHAT???</size>
+Eddy: <size=70>WHAT???</size>
 Ellen: Shush!
-<size=30>Eddy: Oh, right.</size>
+Eddy: <size=30>Oh, right.</size>
 Eddy: I thought you were happy, free, and single, after all that...?
 Ellen: I was. But then I was like --
 Ellen: You know what? I can do whatever.

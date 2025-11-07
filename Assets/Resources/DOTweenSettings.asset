@@ -20,7 +20,7 @@ MonoBehaviour:
   maxSmoothUnscaledTime: 0.15
   rewindCallbackMode: 0
   showUnityEditorReport: 0
-  logBehaviour: 2
+  logBehaviour: 0
   drawGizmos: 1
   defaultRecyclable: 0
   defaultAutoPlay: 3
@@ -31,8 +31,8 @@ MonoBehaviour:
   defaultEasePeriod: 0
   defaultAutoKill: 1
   defaultLoopType: 0
-  debugMode: 0
-  debugStoreTargetId: 0
+  debugMode: 1
+  debugStoreTargetId: 1
   showPreviewPanel: 1
   storeSettingsLocation: 0
   modules:
@@ -46,5 +46,5 @@ MonoBehaviour:
     tk2DEnabled: 0
     deAudioEnabled: 0
     deUnityExtendedEnabled: 0
-  showPlayingTweens: 0
+  showPlayingTweens: 1
   showPausedTweens: 0

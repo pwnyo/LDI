@@ -8,6 +8,7 @@ public class NoteDisplay : MonoBehaviour
 {
     public TextMeshProUGUI header, content;
     public Image box;
+    public Button button;
     public Note note;
     private NoteManager nm;
 

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -24,8 +23,21 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         CROUCH,
         SIT,
         CAUGHT,
+        FALLSPIN,
+        FLOOR,
+        GETUP,
+        LEDGEGRAB,
+        LEDGEJUMP,
+    }
+    public enum PlayerSpecialState
+    {
+        NONE,
+        CUTSCENE,
+        CUTSCENEPAUSE,
     }
     public PlayerState state;
+    public PlayerSpecialState specialState;
+    int wiggleCount = 0, wiggleMax = 3;
     public bool forceSneak;
     public bool isSmall;
     public bool debugPause;
@@ -41,6 +53,8 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     [Header("Input Actions")]
     public InputHelper input;
     [Header("References")]
+    public Transform parentForShaker;
+    public Shaker shaker;
     public Animator animator;
     public GameObject interactArrow;
     public SpriteRenderer spriteRenderer;
@@ -49,6 +63,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     private BoxCollider2D col;
     private AudioSource sfxPlayer;
     public ParticleSystem stepParticles;
+    public Vector3 stepOffset;
     public Color psColor;
     public Material activeInteractableMaterial;
 
@@ -63,7 +78,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
 
     #region Sprites
     [Header("Sprites")]
-    public FaceManager.Face[] altSprites;
+    public FaceSO.SpriteInfo[] altSprites;
     #endregion
 
     #region Variables
@@ -73,6 +88,12 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     public float walkSpeed;
     public float sneakSpeed;
     float moveX;
+    public Vector3 maxVel;
+
+    [Header("Collider Sizes")]
+    public Bounds groundedBounds;
+    public Bounds miniGroundedBounds;
+    public Bounds standingBounds, crouchingBounds;
 
     [Header("Fall and Jump")]
     public LayerMask jumpLayerMask;
@@ -81,10 +102,14 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     public float landTime;
     public float jumpBufferTime;
     public float jumpLockoutTime;
+    public float ledgeGrabLockoutTime;
     float timeSinceJumpInput;
     float timeSinceLastJump;
+    float timeSinceLedgeGrab;
     public float fallSpeed;
     public float fallFastMultiplier;
+    public Vector3 ledgeGrabCheckSize, ledgeGrabCheckOffset;
+    public Vector3 ledgeGrabCeilingCheckSize, ledgeGrabCeilingCheckOffset;
     [SerializeField]
     private float fallSpeedActual;
     private bool isFastfall;
@@ -146,16 +171,21 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     // Update is called once per frame
     void Update()
     {
+        if (specialState != PlayerSpecialState.NONE)
+        {
+            return;
+        }
         if (CanAct() || IsStopped())
         {
-            CheckGround();
-            CheckFall();
-            CheckAnimation();
+            CheckMove();
         }
+        CheckGround();
+        CheckFall();
+        CheckAnimation();
     }
     void FixedUpdate()
     {
-        if (CanAct()) 
+        if (CanAct() && !IsStopped()) 
         {
             transform.position += move * Time.deltaTime;
         }
@@ -163,11 +193,11 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     public void RegisterInputs(InputHelper inputHelper)
     {
         input = inputHelper;
-        input.jumpAction.started += Jump;
+        input.jumpAction.started += Jump; //PS4 X
         input.jumpAction.canceled += Fastfall;
-        input.sneakAction.started += Sneak;
+        input.sneakAction.started += Sneak; //
         input.sneakAction.canceled += Sneak;
-        //input.moveAction.performed += Move;
+        input.moveAction.performed += Wiggle;
         //input.moveAction.canceled += Move;
         input.interactAction.started += Interact;
         input.interactAction.canceled += Interact;
@@ -193,20 +223,19 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     public void SetPlayerState(PlayerState setting)
     {
         state = setting;
-        if (state == PlayerState.BUSY)
-        {
-            Pause();
-        }
         //Debug.Log(setting);
     }
 
     #region Movement Functions
     void CheckAnimation()
     {
-        CheckMove();
         move.x = IsSneaky() && groundState == GroundState.GROUNDED ? moveX * sneakSpeed : moveX * walkSpeed;
         if (groundState != GroundState.GROUNDED)
         {
+            if (rb.velocity.y < 0)
+            {
+                PlayAnimation(PlayerState.JUMP);
+            }
             return;
         }
         if (IsStopped())
@@ -244,6 +273,34 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         if (moveX != 0)
         {
             spriteRenderer.flipX = moveX < 0;
+        }
+    }
+    void Wiggle(InputAction.CallbackContext context)
+    {
+        if (specialState != PlayerSpecialState.CUTSCENE || (state != PlayerState.FLOOR && state != PlayerState.GETUP))
+        {
+            return;
+        }
+        float x = context.ReadValue<Vector2>().x;
+        if (x == 0)
+        {
+            return;
+        }
+        Shake();
+        wiggleCount++;
+        Debug.Log($"wiggle count: {wiggleCount}");
+        if (wiggleCount >= wiggleMax)
+        {
+            if (state == PlayerState.FLOOR)
+            {
+                PlayAnimation(PlayerState.GETUP, true);
+            }
+            else
+            {
+                PlayAnimation(PlayerState.NONE, true);
+                AllowMovement(true);
+            }
+            wiggleCount = 0;
         }
     }
     void Move(InputAction.CallbackContext context)
@@ -299,13 +356,13 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         {
             if (isCrouch)
             {
-                col.offset = new Vector2(0, .75f);
-                col.size = new Vector2(.75f, 1.5f);
+                col.offset = crouchingBounds.center;
+                col.size = crouchingBounds.size;
             }
             else
             {
-                col.offset = new Vector2(0, 1.875f);
-                col.size = new Vector2(.75f, 3.75f);
+                col.offset = standingBounds.center;
+                col.size = standingBounds.size;
             }
         }
     }
@@ -315,32 +372,111 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     }
     void Jump()
     {
-        if (!CanAct() || GameDialogueManager.Instance.dialogueState != GameDialogueManager.DialogueState.NONE)
+        if (!CanAct())
         {
             return;
         }
         timeSinceJumpInput = Time.time;
-        if (groundState == GroundState.GROUNDED)
+        if (groundState == GroundState.GROUNDED || state == PlayerState.LEDGEGRAB)
         {
-            //Debug.Log("Trying to jump!");
+            Debug.Log("Trying to jump!");
             timeSinceLastJump = Time.time;
             groundState = GroundState.RISING;
-            PlayAnimation(PlayerState.JUMP);
+            if (state == PlayerState.LEDGEGRAB)
+            {
+                timeSinceLedgeGrab = Time.time;
+                rb.gravityScale = fallSpeed;
+                if (!IsStopped())
+                {
+                    PlayAnimation(PlayerState.LEDGEJUMP);
+                }
+                else
+                {
+                    PlayAnimation(PlayerState.JUMP);
+                }
+            }
+            else
+            {
+                PlayAnimation(PlayerState.JUMP);
+            }
             PlaySound("JUMP", 0.5f);
             rb.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
         }
     }
+    void CheckGround()
+    {
+        if (HasJustJumped())
+        {
+            return;
+        }
+        bool hitGround, atLedge, movingTowardLedge;
+
+        Bounds bounds = isSmall ? miniGroundedBounds : groundedBounds;
+        Vector2 colBox = new Vector2(bounds.size.x, bounds.size.y);
+        Vector2 colCenter = new Vector3(bounds.center.x, bounds.center.y) + transform.position;
+        Collider2D colliderLand = Physics2D.OverlapBox(colCenter, colBox, 0, jumpLayerMask);
+        //Debug.Log(raycastHit != null);
+        hitGround = colliderLand != null;
+
+        Vector3 offsetA = GetOffsetForPlayerPosAndFlip(ledgeGrabCheckOffset);
+        Vector3 offsetB = GetOffsetForPlayerPosAndFlip(ledgeGrabCeilingCheckOffset);
+        Collider2D colliderLedge = Physics2D.OverlapBox(GetOffsetForPlayerPosAndFlip(ledgeGrabCheckOffset), ledgeGrabCheckSize, 0, jumpLayerMask);
+        Collider2D colliderCeiling = Physics2D.OverlapBox(GetOffsetForPlayerPosAndFlip(ledgeGrabCeilingCheckOffset), ledgeGrabCeilingCheckSize, 0, jumpLayerMask);
+        if (colliderCeiling)
+        {
+            Debug.Log($"hit ceiling: {colliderCeiling.name}");
+        }
+        atLedge = colliderLedge != null && colliderCeiling == null;
+        movingTowardLedge = spriteRenderer.flipX ? (moveX < 0) : moveX > 0;
+
+        if (atLedge)
+        {
+            if (!HasJustReleasedLedge() && movingTowardLedge &&
+                   groundState != GroundState.GROUNDED && state != PlayerState.LEDGEGRAB)
+            {
+                Debug.Log($"{offsetA}/{offsetB}");
+                LedgeGrab();
+            }
+        }
+        else
+        {
+            Debug.Log("released ledge");
+            if (state == PlayerState.LEDGEGRAB)
+            {
+                groundState = GroundState.FALLING;
+                timeSinceLedgeGrab = Time.time;
+            }
+            else
+            {
+                if (state != PlayerState.JUMP && state != PlayerState.LEDGEJUMP)
+                {
+                    state = PlayerState.NONE;
+                }
+            }
+        }
+        if (hitGround)
+        {
+            if (groundState != GroundState.GROUNDED)
+            {
+                Land();
+            }
+        }
+    }
     void CheckFall()
     {
-        if (groundState != GroundState.GROUNDED && rb.velocity.y < -0.05)
+        if (groundState != GroundState.GROUNDED)
         {
-            groundState = GroundState.FALLING;
-            PlayAnimation(PlayerState.FALL);
+            if (rb.velocity.y < -0.05 && state != PlayerState.LEDGEJUMP)
+            {
+                groundState = GroundState.FALLING;
+                PlayAnimation(PlayerState.JUMP);
+            }
+            if (!isFastfall && input.jumpAction.phase == InputActionPhase.Waiting)
+            {
+                Fastfall();
+            }
         }
-        if (!isFastfall && input.jumpAction.phase == InputActionPhase.Waiting)
-        {
-            Fastfall();
-        }
+        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxVel.x, maxVel.x), Mathf.Clamp(rb.velocity.y, -maxVel.y, maxVel.y));
     }
     void Fastfall(InputAction.CallbackContext context)
     {
@@ -348,9 +484,9 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     }
     void Fastfall()
     {
-        if (groundState != GroundState.GROUNDED && !isFastfall)
+        if (groundState != GroundState.GROUNDED && !isFastfall && state != PlayerState.LEDGEGRAB)
         {
-            Debug.Log("Fastfalling");
+            //Debug.Log("Fastfalling");
             isFastfall = true;
             rb.gravityScale = fallSpeed * fallFastMultiplier;
         }
@@ -365,8 +501,8 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
 
         if (!HasJustJumped() && (Time.time - timeSinceJumpInput) < jumpBufferTime)
         {
-            Debug.Log("buffered jump!");
-            Jump();
+            Debug.Log("buffered jump! currently disabled");
+            //Jump();
         }
         else
         {
@@ -384,24 +520,22 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     {
         return (Time.time - timeSinceLastJump) < jumpLockoutTime;
     }
-    void CheckGround()
+    bool HasJustReleasedLedge()
     {
-        if (HasJustJumped() || groundState == GroundState.GROUNDED)
-        {
-            return;
-        }
-        Bounds colBounds = col.bounds;
-        Vector2 colBox = new Vector2(colBounds.size.x - .25f, colBounds.size.y);
-        Vector2 colCenter = new Vector2(colBounds.center.x, colBounds.center.y - .05f);
-        Collider2D raycastHit = Physics2D.OverlapBox(colCenter, colBox, 0, jumpLayerMask);
-        //Debug.Log(raycastHit != null);
-        bool hitGround = raycastHit != null;
-        if (hitGround)
-        {
-            Land();
-        }
+        return (Time.time - timeSinceLedgeGrab) < ledgeGrabLockoutTime;
     }
-
+    void LedgeGrab()
+    {
+        Debug.Log("grabbed ledge");
+        isFastfall = false;
+        rb.velocity = Vector3.zero;
+        rb.gravityScale = 0;
+        PlaySound("LAND", 0.5f);
+        PlayAnimation("LEDGEGRAB");
+    }
+    /// <summary>
+    /// Stops player movement and resets animation to default (NONE)
+    /// </summary>
     public void Pause()
     {
         moveX = 0;
@@ -412,10 +546,21 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     {
         return Mathf.Abs(moveX) < 0.125f;
     }
+    [YarnCommand("allowMovement")]
+    public void AllowMovement(string param)
+    {
+        bool.TryParse(param, out bool setting);
+        AllowMovement(setting);
+    }
     public void AllowMovement(bool setting)
     {
+        Debug.Log($"allowing movement? {setting}");
         canMove = setting;
-        if (!canMove)
+        if (canMove)
+        {
+            specialState = PlayerSpecialState.NONE;
+        }
+        else
         {
             Pause();
         }
@@ -434,21 +579,20 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     [YarnCommand("showplayer")]
     public void ShowPlayer(string param)
     {
-        
         bool.TryParse(param, out bool setting);
         spriteRenderer.enabled = setting;
-        canMove = setting;
+        AllowMovement(setting);
         Debug.Log("showing player " + setting);
         interactArrow.GetComponent<SpriteRenderer>().enabled = setting;
-
     }
     [YarnCommand("usealt")]
     public void UseAlt(string spriteName)
     {
-        foreach (FaceManager.Face f in altSprites)
+        foreach (FaceSO.SpriteInfo f in altSprites)
         {
-            if (f.expression == spriteName) {
-                altSpriteRenderer.sprite = f.sprite;
+            if (f.Name == spriteName) {
+                Debug.Log($"showing alt sprite {spriteName}");
+                altSpriteRenderer.sprite = f.Sprite;
                 altSpriteRenderer.enabled = true;
                 spriteRenderer.enabled = false;
             }
@@ -457,20 +601,20 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     [YarnCommand("usebase")]
     public void UseBase()
     {
-        foreach (FaceManager.Face f in altSprites)
+        foreach (FaceSO.SpriteInfo f in altSprites)
         {
-            altSpriteRenderer.sprite = f.sprite;
+            altSpriteRenderer.sprite = f.Sprite;
             altSpriteRenderer.enabled = false;
             spriteRenderer.enabled = true;
         }
     }
     void Interact(InputAction.CallbackContext context)
     {
-        if (!CanAct())
+        if (!CanAct() || groundState != GroundState.GROUNDED)
         {
             return;
         }
-        if (groundState == GroundState.GROUNDED && context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started)
         {
             if (interactList.Count > 0)
             {
@@ -482,7 +626,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
             if (interactSelection != null)
             {
                 interactSelection.Interact();
-                interactArrow.SetActive(false);
+                DisableInteractArrow();
                 PlaySound("INTERACT", 0.2f);
             }
         }
@@ -524,23 +668,38 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
                 interactIndex = interactList.Count - 1;
             }
         }
+        else
+        {
+            interactIndex = (int)f;
+        }
         PlaceInteractArrow(interactList[interactIndex]);
     }
-    public void DisableInteractArrow()
+    public void DisableInteractArrow(bool savePrevState = false)
     {
-        prevArrowState = interactArrow.activeSelf;
+        if (savePrevState)
+        {
+            prevArrowState = interactArrow.activeSelf;
+        }
         interactArrow.SetActive(false);
     }
-    public void EnableInteractArrow()
+    public void EnableInteractArrow(bool usePrevState = false)
     {
-        interactArrow.SetActive(prevArrowState);
+        if (usePrevState)
+        {
+            interactArrow.SetActive(usePrevState && prevArrowState);
+        }
+        else
+        {
+            interactArrow.SetActive(true);
+        }
     }
     public void PlaceInteractArrow(Interactable interact)
     {
         if (interact.showArrow)
         {
-            //Debug.Log("showing");
-            interactArrow.SetActive(true);
+            string interactableName = string.IsNullOrEmpty(interact.interactableName) ? interact.gameObject.name : interact.interactableName;
+            Debug.Log($"showing arrow for { interactableName }");
+            EnableInteractArrow();
             switch (interact.arrowDirection)
             {
                 case (Interactable.ArrowDirection.DOWN):
@@ -567,7 +726,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
         if (isDetectable)
         {
             Collider2D[] colliders;
-            if (state == PlayerControl.PlayerState.SNEAK)
+            if (state == PlayerState.SNEAK)
             {
                 colliders = Physics2D.OverlapCircleAll(transform.position + soundOffset, sneakRadius, stealthLayerMask);
             }
@@ -629,11 +788,17 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
             sfxPlayer.PlayOneShot(clip, vol);
         }
     }
+    [YarnCommand("shake")]
+    public void Shake()
+    {
+        transform.parent = parentForShaker;
+        shaker.Shake();
+    }
     void ShowParticles()
     {
         if (stepParticles)
         {
-            stepParticles.transform.position = transform.position;
+            stepParticles.transform.position = transform.position + new Vector3(stepOffset.x * (spriteRenderer.flipX ? 1 : -1), stepOffset.y);
             ParticleSystem.MainModule mod = stepParticles.main;
             mod.startColor = psColor;
             stepParticles.Play();
@@ -647,37 +812,66 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     {
 
     }
-    void PlayAnimation(PlayerState state)
+
+    [YarnCommand("setSpecialState")]
+    public void SetSpecialState(string state)
     {
+        System.Enum.TryParse(state, out PlayerSpecialState sps);
+        specialState = sps;
+    }
+    [YarnCommand("playAnimation")]
+    public void PlayAnimation(string state)
+    {
+        System.Enum.TryParse(state, out PlayerState s);
+        PlayAnimation(s, true);
+    }
+    void PlayAnimation(PlayerState state, bool force = false)
+    {
+        //manually controlled
+        if (specialState != PlayerSpecialState.NONE && !force)
+        {
+            return;
+        }
+        if (this.state != state)
+        {
+            //Debug.Log($"changing to state {state}");
+        }
         this.state = state;
         animator.SetInteger("State", (int)(state));
     }
     bool IsSneaky()
     {
-        return forceSneak || isSneaking;
+        return (forceSneak || isSneaking) && groundState == GroundState.GROUNDED;
     }
+    /// <summary>
+    /// True if the player can take all normal actions (e.g. moving, jumping, sneaking)
+    /// False if the player cannot move (e.g. cutscene, phone is up, in dialogue)
+    /// </summary>
+    /// <param name="checkPhone"></param>
+    /// <returns></returns>
     public bool CanAct(bool checkPhone = true)
     {
         if (debugPause) return false;
         if (input == null) return false;
-        return canMove && state != PlayerState.BUSY && GameManager.Instance.IsOpen() && !PhoneManager.Instance.IsFocusing() && (!checkPhone || !GameManager.Instance.isPhoneFocused);
+        if (specialState != PlayerSpecialState.NONE) return false;
+        return canMove && GameManager.Instance.IsOpen() && !PhoneManager.Instance.IsAnimating() && (!checkPhone || !PhoneManager.Instance.IsFocused());
     }
     void TogglePhone(InputAction.CallbackContext context)
     {
-        if (!PhoneManager.Instance.isActiveAndEnabled || !CanAct(false) || 
+        if (!PhoneManager.Instance.isActiveAndEnabled || !CanAct(false) || groundState != GroundState.GROUNDED ||
             GameDialogueManager.Instance.dialogueState != GameDialogueManager.DialogueState.NONE || context.phase != InputActionPhase.Started)
         {
             return;
         }
         Debug.Log(PhoneManager.Instance.phoneState);
-        if (GameManager.Instance.isPhoneFocused)
+        Pause();
+        if (PhoneManager.Instance.IsFocused())
         {
-            PhoneManager.Instance.Unfocus();
+            PhoneManager.Instance.UnfocusPhone();
         }
         else
         {
-            PhoneManager.Instance.Focus();
-            SetPlayerState(PlayerState.BUSY);
+            PhoneManager.Instance.FocusPhone();
         }
     }
     void Reset(InputAction.CallbackContext context)
@@ -688,9 +882,12 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
     {
         if (!GameManager.Instance.debugMode)
             return;
-        SetPlayerState(PlayerState.NONE);
-        GameManager.Instance.inConvo = false;
-        GameManager.Instance.inEssay = false;
+        GameManager.Instance.FreeControls();
+        PhoneManager.Instance.FreeControls();
+    }
+    Vector3 GetOffsetForPlayerPosAndFlip(Vector3 a)
+    {
+        return new Vector3(a.x * (spriteRenderer.flipX ? -1 : 1), a.y, a.z) + transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -710,7 +907,6 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
 
                 if (interactSelection.startOnCollision)
                 {
-                    Debug.Log("test");
                     interactSelection.Interact();
                 }
             }
@@ -728,7 +924,7 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
 
             if (interactList.Count < 1)
             {
-                interactArrow.SetActive(false);
+                DisableInteractArrow();
                 interactSelection = null;
             }
             else
@@ -748,11 +944,16 @@ public class PlayerControl : MonoBehaviour, ISoundMaker
 
         if (col)
         {
-            Bounds colBounds = col.bounds;
-            Vector2 colBox = new Vector2(colBounds.size.x - .25f, colBounds.size.y);
-            Vector2 colCenter = new Vector2(colBounds.center.x, colBounds.center.y - .05f);
+            Bounds bounds = isSmall ? miniGroundedBounds : groundedBounds;
+            Vector2 colBox = new Vector2(bounds.size.x, bounds.size.y);
+            Vector2 colCenter = new Vector3(bounds.center.x, bounds.center.y) + transform.position;
             Gizmos.color = Color.black;
             Gizmos.DrawWireCube(colCenter, colBox);
         }
+
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireCube(GetOffsetForPlayerPosAndFlip(ledgeGrabCheckOffset), ledgeGrabCheckSize);
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(GetOffsetForPlayerPosAndFlip(ledgeGrabCeilingCheckOffset), ledgeGrabCeilingCheckSize);
     }
 }

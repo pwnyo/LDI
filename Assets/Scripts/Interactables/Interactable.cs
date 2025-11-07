@@ -21,6 +21,8 @@ public abstract class Interactable : MonoBehaviour, System.IComparable<Interacta
     public Vector3 arrowOffset;
     public Vector3 arrowScale = new Vector3(1, 1, 1);
     public bool startOnCollision;
+    Sequence matSeq;
+
     public abstract void Interact();
 
     protected virtual void Start()
@@ -59,13 +61,18 @@ public abstract class Interactable : MonoBehaviour, System.IComparable<Interacta
             return;
         }
 
+        if (matSeq != null)
+        {
+            matSeq.Kill();
+        }
+
         if (m != null)
         {
             sr.material = m;
-            Sequence seq = DOTween.Sequence();
-            seq.Append(sr.material.DOColor(new Color(1, 1, 1, 0.1f), 0.5f));
-            seq.Append(sr.material.DOColor(new Color(1, 1, 1, 0.5f), 0.5f));
-            seq.SetLoops(-1);
+            matSeq = DOTween.Sequence();
+            matSeq.Append(sr.material.DOColor(new Color(1, 1, 1, 0.1f), 0.5f));
+            matSeq.Append(sr.material.DOColor(new Color(1, 1, 1, 0.5f), 0.5f));
+            matSeq.SetLoops(-1);
         }
         else
         {

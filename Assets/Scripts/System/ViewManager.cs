@@ -179,7 +179,7 @@ public class ViewManager : MonoBehaviour
         //Debug.Log("Fading out");
         if (pc)
         {
-            pc.SetPlayerState(PlayerControl.PlayerState.BUSY);
+            pc.Pause();
         }
         fadeAnimator.SetInteger("State", (int)FadeState.OUT);
         yield return new WaitForSeconds(fadeOutTime);
@@ -191,15 +191,11 @@ public class ViewManager : MonoBehaviour
         //Debug.Log("Fading in");
         if (pc)
         {
-            pc.SetPlayerState(PlayerControl.PlayerState.BUSY);
+            pc.Pause();
         }
         fadeAnimator.SetInteger("State", (int)FadeState.IN);
         yield return new WaitForSeconds(fadeInTime);
         fadeAnimator.SetInteger("State", (int)FadeState.NONE);
-        if (pc)
-        {
-            pc.SetPlayerState(PlayerControl.PlayerState.NONE);
-        }
         FindObjectOfType<ObjectSchedule>().LoadDialogue();
         //Debug.Log("Faded in " + pc.state);
     }

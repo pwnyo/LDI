@@ -1,9 +1,10 @@
 title: d1_wakeup
 ---
+<<cross TransitionCanvas 1.5>>
+<<wait  0.5>>
 <<tor TransitionCanvas EddyRoom>>
 <<showplayer Player true>>
-<<cross TransitionCanvas 2>>
-<<wait 2>>
+<<wait 1>>
 <<daystart UICanvas 0>>
 <<settime TimeManager 1 morning>>
 <<cameratarget Cameras Player>>
@@ -176,7 +177,7 @@ Another night....
 <<wait 0.1>>
 <<hidetalk DialogueCanvas>>
 <<textcontact DialogueCanvas June>>
-June: how'd your day go? :3
+June: how'd your day go? ;3
 <<if $tasks < 2>>
     A little stressed, didn't get as much done as i hoped
     June: It's ok! tomorrow's a new day

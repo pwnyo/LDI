@@ -13,12 +13,12 @@ Eddy: Homework, chores, life...&uh
 <<usealt Player lay1>>
 Eddy: ...and so little energy.&tired
 <<usealt Player lay0>>
-Eddy: Oh well. See ya.
-Eddy: ...
+Eddy: Oh well. See ya.&tired
+Eddy: ...&away
 <<usealt Player lay2>>
-Eddy: Actually, there's a ton of things I WANT to do.
+Eddy: Actually, there's a ton of things I WANT to do.&away
 Eddy: People I WANT to talk to.&happy
-Eddy: Well, a few.
+Eddy: Well, a few.&happy
 <<camerashake Cameras 0.5 0.1 100 >> 
 Eddy: Oh!&shock
 Eddy: There's one of them!
@@ -47,8 +47,8 @@ title: d0_evening_slow
 ---
 <<sfxplay Sound thud>>
 <<camerashake Cameras 1 0.1 200 >> 
-Mom: EDDY! Get down here!!!
-Eddy: Coming!
+Mom: EDDY! Get down here!!!&annoyed
+Eddy: Coming!&uh
 <<set $d0_june_late to true>>
 <<to TransitionCanvas HomeUpper EddyRoom>>
 <<wait 0.15>>
@@ -56,8 +56,8 @@ Eddy: Coming!
 title: d0_late
 ---
 << camerashake Cameras 1 0.2 300 >> 
-Mom: EDDY!!! Come down here!
-Eddy: Agh! I better get going downstairs!
+Mom: EDDY!!! Come down here!&annoyed
+Eddy: Agh! I better get going downstairs!&uh
 <<spawn TransitionCanvas HomeUpper>>
 <<to TransitionCanvas HomeLower HomeUpper>>
 ===
@@ -66,7 +66,7 @@ title: d0_hallway
 <<if $d0_june is false>>
     [[phonestart_june]]
 <<endif>>
-Eddy: Hmm.
+Eddy: Hmm.&skeptical
 Eddy: Wonder what June wanted to say.
 ===
 title: dad_d0
@@ -76,7 +76,7 @@ position: 205,520
 ---
 << if $vdadzero is false >> 
     Dad: Hi, Eddy.
-    Dad: Try to eat some veggies with it, this time.
+    Dad: Try to eat some veggies with it, this time.&happy
     <<set $vdadzero to true>>
 << else >>
     Dad: Can you get the bowls for me?
@@ -90,8 +90,8 @@ position: 417,519
 << playsound SFXSource murmur >>
 <<camerashake 1 0.1 100>>
 Eddy: Hey, dinnerrrrr!
-Mom: *hushed whispers*
-Ah, she's praying now. Let's not rush her.
+Mom: ....&tired
+Ah, she's praying now. Let's not rush her.&psh
 ===
 title: d0_bedtime
 ---

@@ -149,6 +149,7 @@ MonoBehaviour:
   header: {fileID: 6737969760952742709}
   content: {fileID: 6737969760932149294}
   box: {fileID: 6737969760327923019}
+  button: {fileID: 6737969760327923016}
   note:
     header: 
     content: 
@@ -187,7 +188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 1, y: -6}
+  m_AnchoredPosition: {x: 1, y: -7.5}
   m_SizeDelta: {x: 50, y: 6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6737969760932149289
@@ -248,8 +249,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2.5
-  m_fontSizeBase: 2.5
+  m_fontSize: 3.5
+  m_fontSizeBase: 3.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -324,7 +325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 1, y: -1.5}
+  m_AnchoredPosition: {x: 1, y: -0.75}
   m_SizeDelta: {x: 50, y: 16}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6737969760952742708
@@ -383,8 +384,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

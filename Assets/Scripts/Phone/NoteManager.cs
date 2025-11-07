@@ -10,7 +10,7 @@ public class NoteManager : AppManager
     public Note[] notes;
     private List<NoteDisplay> displays = new List<NoteDisplay>();
 
-    public NoteDisplay expansion;
+    public NoteDisplay expandedNote;
     public GameObject otherNotes;
     public ToDoManager toDoList;
     bool showingToDo;
@@ -20,7 +20,27 @@ public class NoteManager : AppManager
     {
         ShowNote(notes[0], false);
     }
+    public override void Navigate(Vector2 input)
+    {
+        if (input.y > 0.1)
+        {
+            CheckOption(buttonIndex - 1);
+        }
+        else if (input.y < -0.1)
+        {
+            CheckOption(buttonIndex + 1);
+        }
+    }
+    public override void Focus()
+    {
+        buttons.Clear();
 
+        foreach (NoteDisplay nd in displays)
+        {
+            buttons.Add(nd.button);
+        }
+        base.Focus();
+    }
     public override void Back()
     {
         base.Back();
@@ -33,7 +53,7 @@ public class NoteManager : AppManager
         }
         else
         {
-            if (PhoneManager.Instance.phoneApp != PhoneManager.PhoneApp.HOME)
+            if (PhoneManager.Instance.currentApp != PhoneManager.PhoneApp.HOME)
                 PhoneManager.Instance.OpenApp("home");
         }
     }
@@ -44,21 +64,21 @@ public class NoteManager : AppManager
 
         otherNotes.SetActive(!expanded);
         toDoList.gameObject.SetActive(expanded);
-        expansion.gameObject.SetActive(false);
+        expandedNote.gameObject.SetActive(false);
     }
     public void ExpandNote(Note n)
     {
         expanded = true;
 
         otherNotes.SetActive(false);
-        expansion.Show(n);
-        expansion.gameObject.SetActive(true);
+        expandedNote.Show(n);
+        expandedNote.gameObject.SetActive(true);
     }
     public void UnexpandNote()
     {
         expanded = false;
 
-        expansion.gameObject.SetActive(false);
+        expandedNote.gameObject.SetActive(false);
         otherNotes.SetActive(true);
     }
     [YarnCommand("shownote")]

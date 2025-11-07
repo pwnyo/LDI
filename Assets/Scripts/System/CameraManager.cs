@@ -12,6 +12,9 @@ public class CameraManager : MonoBehaviour
     public CinemachineVirtualCamera[] cams;
     public List<Transform> subjects;
     int subjectIndex = 0;
+    public CinemachineBrain brain;
+    //TODO: use it or lose it
+    public CinemachineBlendDefinition ease, hard, cut;
 
     //Borrowed from https://github.com/Lumidi/CameraShakeInCinemachine/blob/master/SimpleCameraShakeInCinemachine.cs
     private float shakeDuration;          // Time the Camera Shake effect will last
@@ -73,12 +76,13 @@ public class CameraManager : MonoBehaviour
                 return;
             }
         }
-        Debug.Log("Camera target " + param + " not found");
+        Debug.Log("Camera target " + param.ToString() + " not found");
     }
     [YarnCommand("cameraswap")]
     public void SwapCamera()
     {
-        UseNextCam();
+        ResetCameraShake();
+        NextCamIndex();
         foreach (Cinemachine.CinemachineVirtualCamera c in cams)
         {
             c.gameObject.SetActive(false);
@@ -86,14 +90,22 @@ public class CameraManager : MonoBehaviour
         cams[subjectIndex].gameObject.SetActive(true);
         shakeVcam = cams[subjectIndex];
         shakeVcamNoise = shakeVcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        StartCoroutine(WaitForCamSwap());
     }
-    void UseNextCam()
+    void NextCamIndex()
     {
         subjectIndex++;
         if (subjectIndex >= cams.Length)
         {
             subjectIndex = 0;
         }
+    }
+    IEnumerator WaitForCamSwap()
+    {
+        float blendDur = brain.m_DefaultBlend.BlendTime;
+        GameManager.Instance.inTransition = true;
+        yield return new WaitForSeconds(blendDur);
+        GameManager.Instance.inTransition = false;
     }
 
     [YarnCommand("camerashake")]
@@ -115,7 +127,7 @@ public class CameraManager : MonoBehaviour
         shakeAmplitude = amp;
         shakeFrequency = freq;
 
-        StopAllCoroutines();
+        StopCoroutine(ShakeCamera());
         StartCoroutine(ShakeCamera());
     }
 
@@ -124,6 +136,13 @@ public class CameraManager : MonoBehaviour
         shakeVcamNoise.m_AmplitudeGain = shakeAmplitude;
         shakeVcamNoise.m_FrequencyGain = shakeFrequency;
         yield return new WaitForSeconds(shakeDuration);
-        shakeVcamNoise.m_AmplitudeGain = 0f;
+        ResetCameraShake();
+    }
+    void ResetCameraShake()
+    {
+        if (shakeVcamNoise)
+        {
+            shakeVcamNoise.m_AmplitudeGain = 0f;
+        }
     }
 }

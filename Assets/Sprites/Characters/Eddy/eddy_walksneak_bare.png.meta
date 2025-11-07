@@ -51,7 +51,7 @@ TextureImporter:
       213: -1327580154537806303
     second: eddy_walksneak_bare_15
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -72,6 +72,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -81,8 +82,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -103,11 +104,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -482,6 +486,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      eddy_walksneak_bare_0: 2102637099867172719
+      eddy_walksneak_bare_1: -7296802451099812383
+      eddy_walksneak_bare_10: -1172209269805250006
+      eddy_walksneak_bare_11: -577275441816881196
+      eddy_walksneak_bare_12: 5114662801035668295
+      eddy_walksneak_bare_13: 291256622047514097
+      eddy_walksneak_bare_14: -3492705549177700123
+      eddy_walksneak_bare_15: -1327580154537806303
+      eddy_walksneak_bare_2: -126973907069530622
+      eddy_walksneak_bare_3: -8830036453533599270
+      eddy_walksneak_bare_4: 5312618303381023629
+      eddy_walksneak_bare_5: 4700090848603577359
+      eddy_walksneak_bare_6: -2888411531296015657
+      eddy_walksneak_bare_7: 2448905782831119170
+      eddy_walksneak_bare_8: -4100591771760514795
+      eddy_walksneak_bare_9: -9054606600578591732
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

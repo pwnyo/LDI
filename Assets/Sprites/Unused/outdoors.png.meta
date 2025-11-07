@@ -54,7 +54,7 @@ TextureImporter:
       213: 6364016191384483322
     second: outdoors_16
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -75,6 +75,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -84,8 +85,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -106,11 +107,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -506,6 +510,24 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      outdoors_0: -1080483789606429479
+      outdoors_1: -5390696353032857168
+      outdoors_10: -4016401773063406943
+      outdoors_11: 6983301823463576789
+      outdoors_12: 3238053025101167564
+      outdoors_13: 1033817868104742735
+      outdoors_14: 106545450199041495
+      outdoors_15: -1888452346212884306
+      outdoors_16: 6364016191384483322
+      outdoors_2: -3598331804129639415
+      outdoors_3: -2697681461869817201
+      outdoors_4: -7890613855911374541
+      outdoors_5: -1027567616544831747
+      outdoors_6: 2574376586266998209
+      outdoors_7: -1162925952835103065
+      outdoors_8: -578826649882836822
+      outdoors_9: 8693052861878055795
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

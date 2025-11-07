@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
 
     public enum TimeOfDay
     {
-        ALL,
         MORNING,
         AFTERNOON,
         FREETIME,
@@ -20,6 +19,7 @@ public class GameManager : MonoBehaviour
         NIGHT,
         BEDTIME,
         BETWEEN,
+        ALL,
     }
     public enum ClosedStateReasons
     {
@@ -99,12 +99,21 @@ public class GameManager : MonoBehaviour
         inConvo = false;
         inEssay = false;
         inTransition = false;
+        inPiano = false;
 
         closedStateReasons = new HashSet<ClosedStateReasons>();
     }
     public bool IsOpen()
     {
         if (inConvo || inEssay || inTransition || inPiano)
+        {
+            return false;
+        }
+        return true;
+    }
+    public bool CanProgressDialogue()
+    {
+        if (inTransition)
         {
             return false;
         }

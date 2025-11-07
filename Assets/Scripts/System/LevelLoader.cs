@@ -67,7 +67,7 @@ public class LevelLoader : MonoBehaviour
         if (!tm)
             tm = FindObjectOfType<TimeManager>();
         GameManager.Instance.inTransition = true;
-        GameDialogueManager.Instance.dr.variableStorage.SetValue("$currentscene", SceneManager.GetActiveScene().name);
+        GameDialogueManager.Instance.OnSceneChange(SceneManager.GetActiveScene().name);
         //Debug.Log("showing scene");
         //cross.SetInteger("Black", 1);
         if (tm)
@@ -176,6 +176,12 @@ public class LevelLoader : MonoBehaviour
             PlayerControl.Instance.Spawn(s.location, PlayerControl.Instance.spriteRenderer.flipX);
         }
     }
+    /// <summary>
+    /// Load a scene. By default, does not reload if the scene
+    /// is the same as the current one. Set force = true to reload.
+    /// </summary>
+    /// <param name="param"></param>
+    /// <param name="force"></param>
     [YarnCommand("toscene")]
     public void LoadLevel(string param, bool force = false)
     {
@@ -210,7 +216,7 @@ public class LevelLoader : MonoBehaviour
         wipe.SetBool("WipeIn", false);
 
         Debug.Log("waiting");
-        PhoneManager.Instance.Unfocus();
+        PhoneManager.Instance.UnfocusPhone();
         GameManager.Instance.inTransition = true;
         if (currentTrack != nextTrack && nextTrack != "")
         {
@@ -267,8 +273,10 @@ public class LevelLoader : MonoBehaviour
     }
     IEnumerator ICrossFade(float waitTime)
     {
+        GameManager.Instance.inTransition = true;
         cross.SetInteger("Black", 1);
         yield return new WaitForSeconds(waitTime);
         cross.SetInteger("Black", -1);
+        GameManager.Instance.inTransition = false;
     }
 }

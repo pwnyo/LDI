@@ -48,7 +48,7 @@ TextureImporter:
       213: -2515540366871175357
     second: june_walk_14
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -69,6 +69,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -78,8 +79,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -100,11 +101,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -470,6 +474,22 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      june_walk_0: -2761057712577839778
+      june_walk_1: 1158679027080676339
+      june_walk_10: 9144044503613208335
+      june_walk_11: -7873086064337092631
+      june_walk_12: -4121497274235655124
+      june_walk_13: 5105741148607637216
+      june_walk_14: -2515540366871175357
+      june_walk_2: 6452074116242757700
+      june_walk_3: 3710184665287729892
+      june_walk_4: -8593931531001474716
+      june_walk_5: 835436025648465613
+      june_walk_6: -3660213445224740620
+      june_walk_7: 1830216989502019171
+      june_walk_8: -5487875917654686600
+      june_walk_9: 1240861202568416790
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

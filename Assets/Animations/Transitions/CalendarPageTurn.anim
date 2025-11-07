@@ -32,7 +32,7 @@ AnimationClip:
       value: {fileID: -4231844718936633718, guid: ea58e7f3899dce84b81d3ac9efa39ad2,
         type: 3}
     attribute: m_Sprite
-    path: 
+    path: Calendar/PageTurn
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_SampleRate: 6
@@ -43,7 +43,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 0
+      path: 600971267
       attribute: 2015549526
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114

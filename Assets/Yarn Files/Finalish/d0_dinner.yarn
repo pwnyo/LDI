@@ -1,102 +1,113 @@
-title: d0_dinner
+title: d0_predinner
 ---
 <<tor TransitionCanvas HomeLower>>
 <<cameratarget Cameras Table>>
 Eddy: Dinner's ready, everyone!!!
 <<cross TransitionCanvas 1.5>>
 <<clockscale UICanvas 0>>
-<<wait 1.5>>
+<<wait 0.5>>
 <<settime TimeManager 0 dinner>>
-<<showplayer Player false>>
+===
+title: d0_dinner
+---
+<<yarnsprite YarnController player false>>
 <<yarnoff YarnController table>>
-Eddy: Fuwaaa....
-Eddy: I'm. So. FULL.
-Dad: Troi oi, look at him rub his belly. It's like mine!@v
-Eddy: That's how good it was.@
-Ellen: Is it just me, or was it spicier this time!?
-Ellen: My tongue's burning.
-Mom: I added some peppers.
-Mom: Used a new recipe my sister sent me.
-Eddy: Bác Giang sent you a text?
-Mom: No, on Youtube.
-Ellen: Whaaat? You're so advanced now!
-Eddy: I know, right?
-Eddy: I saw dad use "lol" the other day and thought you stole his phone.
-Dad: We have to keep learning even when we're old.
-Eddy: Well, looks like Ellen's having trouble with that.
-Ellen: Hey!
-Mom: That reminds me....
-Mom: Did you do your homework yet?
-Ellen: I have a BUNCH of stuff I need to do. Med school suuucksss.
-Ellen: There's like, three discussion posts I need to do right after dinner, so --
-Mom: Phung.:Ellen's Vietnamese name.@v
-Mom: Troi oi, always talking in English.:Troi oi is a Vietnamese phrase used in similar contexts to "good grief," "oh my god," and "yare yare daze".
-Mom: Talk in Vietnamese at dinner.
-Ellen: And Eddy gets a pass, as usual?@
-Eddy: I can't speak any more....
-Ellen: ANYWAY.
-Ellen: I have three discussion posts, so I have to finish quick.@v
-Ellen: I'm gonna need you to edit them later, Eddy.@
-Eddy: What's in it for me?
-Ellen: Your sister's mental health and academic achievement?
-Eddy: My question still stands.
-Ellen: ...
-Eddy: Okay, fineee.
-Daddy: What about you, Eddy?@v
-Eddy: Uh....@
-Eddy: Got some extra homework, but at least it's a long weekend!
+Eddy: Fuwaaa....&shock
+Eddy: I am. Officially. FULL!&shock
+Mom: Good, right? You even drank all the soup this time.@v
+Dad: Gyahaha, look at him pat his belly! Just like me.&happy
+Eddy: Real good.@&happy
+Dad: That's your mom's cooking, all right.@v
+Mom: Of course.&smirk
+Ellen: Okay but, is it just me, or is this seriously SPICY!?@&shock
+->Just you
+    Eddy: Just you. Undisciplined tastebuds.&smirk
+->Me too
+    Eddy: I drank 3 cups of water and my nose is running.
+    Eddy: But it's just you.&smirk
+Ellen: My tongue's burning....
+Ellen: Are there extra peppers or something?
+Mom: Quynh.:Ellen's Vietnamese name.@v&annoyed
+Mom: No English at the table.
+Ellen: Oh, okay --@&skeptical
+Ellen: Seriously so spicy I could DIE.@v&shock
+Mom: Mhmm hmm. It's a new recipe Bác Giang sent me.&blank
+Eddy: She texted you a whole recipe?@
+Mom: From Youtube.
+Eddy: Whoa.
+Ellen: Wowww. You're so advanced now!
+Eddy: I saw dad use "lol" the other day and thought, "he's too old to be using that".
+Eddy: Then I had to re-assess my own age.&shock
+Dad: Even old people have to learn someday, Eddy.@v
+Eddy: Yeah. If only Ellen could figure that out....@&psh
+Ellen: ...Hey!
+Mom: We have to learn.@v
+Mom: Or DIE.&shock
+Eddy: It's not THAT serious!&shock
+Dad: That's why I follow the news.
+Mom: And why I read books.@v
+Dad: And what your homework's for.
+Mom: Do your homework.&tired
+Mom: Or DIE.&shock
+Eddy: Uhhh....@&uh
+Ellen: Well, <i>I</i> at least got halfway through my discussion posts.&smirk
+Ellen: Four of them. Then I have to get ready for clinicals.&skeptical
+Ellen: Man, med school sucks.&tired
+Eddy: And <i>I</i>...!
+Eddy: Am going to get to that tomorrow.&shock
+Eddy: Hehe.
+Mom: How much homework?@v&annoyed
 <<if $vdesk is true>>
-    Eddy: I'm not done, but I wrote down everything I need to finish for tomorrow!
-    Mom: Hm.
+    Eddy: I'm not sure off the top of my head, but...@&uh
+    Eddy: I wrote everything down for later!&uh
+    Mom: Hmm.@v
 <<else>>
-    Eddy: I'll check my assignments after dinner.
-    Mom: You don't even know what homework you have!?
+    Eddy: I... can check after dinner.@&uh
+    Eddy: I... forgot.&uh
+    Mom: You don't even know what homework you have!?@v&annoyed
 <<endif>>
-Eddy: I mean, I just got them today. I'll handle it by Sunday.
+Eddy: I mean, I just got them today. I'll handle it by Sunday.@
 Mom: That's what you always say.@v
-Eddy: And I do mean it.@
+Dad: It's always better to do it early. Why take breaks when you can just do it now?
 ->Argue
     <<set $d0_argue to true>>
-    Eddy: Like, I don't forget on purpose or something.
-    Mom: You just don't care enough.@v
-    Mom: If it really mattered to you, you'd remember.
-    Ellen: True.@
-    Eddy: Ellen -- ugh.
-    Eddy: Okay! I get it's my fault.
-    Eddy: But you at least don't have to get mad at me for it. I <i>am</i> trying.
-    Mom: So you're telling me to shut up? In my own house?@v
-    Mom: I raised you all this time, and you tell me to stop talking?
-    Eddy: No! That's not what I meant --@
-    Eddy: *sigh*
-    Eddy: Never mind.
+    Eddy: Well, I don't forget on purpose or something.&ashamed
+    Mom: If it really mattered to you, you'd remember.@v&tired
+    Ellen: True.
+    Eddy: Ellen -- ugh. You're not helping!@
+    Eddy: I just don't need you to... get mad at me for it, when I'm already mad at myself.&ashamed
+    Mom: If you didn't "need" me, then you would've already done it.@v
 ->Do not
     <<set $d0_argue to false>>
-    Eddy: I've been wanting to say this for a while, but....
-    Mom: Hm?
-    Eddy: ...Never mind.
-    Eddy: ....
-Eddy: ....&stress
-Ellen: ....
-Ellen: Anyway!
-Ellen: I'm gonna need some boba to recover from this.
-Ellen: Can you grab it from the fridge for me, Eddy?
-Eddy: Huh? I'm just as far as you are.
+Eddy: Okay, okay....@&away
+Mom: Don't "okay, okay." Just do it.@v
+Eddy: ....@&ashamed
+Ellen: ANYWAY.@away
+Ellen: Need to get back to work!
+Ellen: Eddy -- Discussion posts.
+Ellen: Help me edit?&evil
+Eddy: ...What's in it for me?@skeptical
+Ellen: Your sister's mental health and academic achievement?
+Eddy: *yawn*&psh
+Eddy: I'll start bidding at one bingsu.@smirk
+Eddy: Nah I'm just kidding, I'll help.
+Ellen: Well, I have an extra bubble tea in the fridge. You can have it.
 Mom: When did you get bubble tea?@v
 Ellen: Uh....@
-Ellen: I went out with some friends earlier! Right after class ended.
-Ellen: Speaking of -- I gotta finish this discussion tonight, since I'm working tomorrow.
-Dad: I'll cut some fruit.
+Ellen: I went out with some friends earlier. Right after class.
+Ellen: Speaking of -- gotta finish this assignment by midnight. See ya!
+Dad: Then I'll cut some fruit.
 Dad: You start cleaning up, Eddy.
-Eddy: Okay....
+Eddy: Okay....&uh
 Ellen: Bye!
 <<cross TransitionCanvas 2>>
 <<hide YarnController EllenSit>>
 <<wait 2>>
 <<cameratarget Cameras Player>>
-<<showplayer Player true>>
+<<yarnsprite YarnController player true>>
 <<settod TimeManager night>>
 <<yarnon YarnController table>>
-Eddy: Ellen's acting all weird.... Maybe I should talk to her about it.
+Eddy: Ellen's acting weird.... Maybe I should talk to her about it.&uh
 ===
 title: d0_help
 ---
@@ -105,12 +116,15 @@ title: d0_help
 <<set $bowleddy to false>>
 <<set $bowlellen to false>>
 <<set $bowldad to false>>
-Eddy: Ooh, that smells good!
+<<set $disable_stairs to true>>
+Eddy: Ooh, that smells good!&shock
 Eddy: *sniff sniff*
-Eddy: Mmmmm.
+Eddy: Mmmmm.&happy
+<<cameratarget Cameras Table>>
 Eddy: That's definitely bun bo hue.:A spicy Vietnamese noodle soup made with rice noodles, beef, lemongrass, and often pig's blood, oxtail, and beansprouts.
 <<camerashake Cameras .5 .1 100>>
 Dad: Eddy! Bring these bowls out!
+<<cameratarget Cameras Player>>
 Eddy: Okay!
 ===
 title: bowl
@@ -186,7 +200,7 @@ title: d0_dadchair
     With that, we can finally eat.
     <<wait 0.1>>
     <<yarnon YarnController bowl3>>
-    [[d0_dinner]]
+    [[d0_predinner]]
 <<endif>>
 ===
 title: d0_momchair

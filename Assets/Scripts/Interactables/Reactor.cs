@@ -9,7 +9,7 @@ public class Reactor : Interactable
     Animator animator;
     public float animationTime;
 
-    private bool isOn;
+    protected bool isOn;
     public bool startAutomatically;
 
     [Header("Optional")]
@@ -44,15 +44,14 @@ public class Reactor : Interactable
         {
             dialogueRunner.StartDialogue(talkToNode);
         }
-        else
+        isOn = !isOn;
+        if (animator)
         {
-            isOn = !isOn;
             animator.SetBool("On", isOn);
-
-            if (sound != null)
-            {
-
-            }
+        }
+        if (sound != null && sfxPlayer)
+        {
+            sfxPlayer.PlayOneShot(sound);
         }
     }
 

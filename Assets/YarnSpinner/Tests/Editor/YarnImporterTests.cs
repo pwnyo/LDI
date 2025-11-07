@@ -1,7 +1,7 @@
 using System.IO;
 using NUnit.Framework;
 using UnityEditor;
-using UnityEditor.Experimental.AssetImporters;
+
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -15,7 +15,7 @@ public class YarnImporterTests
 
         File.WriteAllText(Application.dataPath + "/" + fileName + ".yarn", textYarnAsset);
         AssetDatabase.Refresh();
-        var result = ScriptedImporter.GetAtPath("Assets/" + fileName + ".yarn") as YarnImporter;
+        var result = UnityEditor.AssetImporters.ScriptedImporter.GetAtPath("Assets/" + fileName + ".yarn") as YarnImporter;
 
         Assert.That(result.isSuccesfullyCompiled);
 
@@ -32,7 +32,7 @@ public class YarnImporterTests
         LogAssert.ignoreFailingMessages = true;
         AssetDatabase.Refresh();
         LogAssert.ignoreFailingMessages = false;
-        var result = ScriptedImporter.GetAtPath("Assets/" + fileName + ".yarn") as YarnImporter;
+        var result = UnityEditor.AssetImporters.ScriptedImporter.GetAtPath("Assets/" + fileName + ".yarn") as YarnImporter;
 
         Assert.That(!result.isSuccesfullyCompiled);
 
@@ -48,7 +48,7 @@ public class YarnImporterTests
 
         File.WriteAllText(Application.dataPath + "/" + fileName + ".yarn", textYarnAsset);
         AssetDatabase.Refresh();
-        var result = ScriptedImporter.GetAtPath("Assets/" + fileName + ".yarn") as YarnImporter;
+        var result = UnityEditor.AssetImporters.ScriptedImporter.GetAtPath("Assets/" + fileName + ".yarn") as YarnImporter;
 
         Assert.That(Equals(result.baseLanguage.text, expectedStringTable));
 
